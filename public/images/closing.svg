@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1600" viewBox="0 0 1400 1600" role="img" aria-label="Western shore">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#E4DFD2"/>
+      <stop offset="1" stop-color="#CBC4B3"/>
+    </linearGradient>
+    <linearGradient id="light" x1="0.15" y1="0" x2="0.75" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="1600" fill="url(#g)"/>
+  <rect x="112" y="0" width="476.00000000000006" height="1600" fill="url(#light)"/>
+  <rect x="700" y="288" width="392.00000000000006" height="832" fill="#FFFFFF" opacity="0.28"/>
+  <rect x="84" y="992" width="420" height="32" fill="#211F1A" opacity="0.1"/>
+  <text x="700" y="800" text-anchor="middle" dominant-baseline="middle"
+    font-family="Georgia, 'Times New Roman', serif" font-size="77"
+    fill="#211F1A" opacity="0.42">Western shore</text>
+</svg>

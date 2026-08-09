@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nesbali 102
 
-## Getting Started
+A single-page property listing for a private house sale, built in the editorial
+style of [Fantastic Frank](https://www.fantasticfrank.com/) — full-bleed
+photography, a warm chalk page, a serif display face against a grotesque, and a
+12-column grid with a hairline gap.
 
-First, run the development server:
+Next.js 16 (App Router) · [Base Web](https://baseweb.design/) 18 · Styletron.
+
+## Getting it running
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install && npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Making it yours
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Almost everything lives in one file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | Where |
+| --- | --- |
+| Price, size, rooms, description, highlights, facts, contact details | [content/property.ts](content/property.ts) |
+| Photographs and floor plans | `public/images/` |
+| Colours, type scale, grid | [app/theme.ts](app/theme.ts) |
 
-## Learn More
+### Photographs
 
-To learn more about Next.js, take a look at the following resources:
+The images that ship with the repo are generated placeholders so the layout
+reads correctly before the real shoot. Replace them one for one in
+`public/images/` — keep the file names and everything picks up automatically, or
+change the paths in `content/property.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Two things to get right, because the layout leans on them:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **The hero** wants a wide landscape frame (3:2 or wider). It is cropped to
+  fill, so leave room around the subject.
+- **Gallery images** carry a `width` of `"full"`, `"half"` or `"inset"`. Alternating
+  them is what gives the scroll its rhythm — `"half"` sits against the right edge.
 
-## Deploy on Vercel
+Once the real photographs are in, delete `scripts/make-placeholders.mjs`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### The enquiry form
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+It has no backend on purpose. Submitting opens the visitor's own mail client
+with everything filled in and addressed to `contact.email`. Nothing is stored,
+nothing needs a database, and there is no privacy policy to write.
+
+If you would rather collect enquiries somewhere, replace the `onSubmit` handler
+in [components/Enquiry.tsx](components/Enquiry.tsx) with a `fetch` to an API
+route.
+
+### Before you publish
+
+- [ ] Real photographs in `public/images/`
+- [ ] Your phone number, email and the property number in `content/property.ts`
+- [ ] The price, size and plot verified against the official records
+- [ ] `meta.siteUrl` set to the deployed domain, so link previews resolve
+
+## Deploying
+
+```bash
+npx vercel deploy --prod
+```
+
+## How it is put together
+
+```
+app/
+  theme.ts       Base Web theme — palette, type scale, zero border radii
+  providers.tsx  Styletron engine, split server/client for SSR
+  layout.tsx     Fonts (Newsreader + Inter), metadata
+components/
+  Primitives.tsx Grid, Cell, Section, Eyebrow, the outline button
+  Hero.tsx       Full-bleed image and the title bar beneath it
+  Intro.tsx      Description, contact card, highlights, facts
+  Gallery.tsx    The scrolling photo sequence
+  Lightbox.tsx   Full-screen viewer (arrow keys work)
+  Enquiry.tsx    The form
+  Closing.tsx    Closing panel and footer
+```
+
+The 12-column grid is the load-bearing idea: every section places its content on
+the same columns (2–5 on the left, 7–11 on the right), which is what makes the
+page feel set rather than assembled.
+
+## A note on the design
+
+The layout, proportions and typographic structure follow Fantastic Frank's
+listing pages. None of their photography, copy, fonts or branding is used —
+the display face is Newsreader and the text face is Inter, both open source.

@@ -1,0 +1,115 @@
+"use client";
+
+import { styled } from "baseui";
+import { layout, palette, type } from "@/app/theme";
+import { property } from "@/content/property";
+import { Cell, Grid, OutlineAction } from "./Primitives";
+
+const Panel = styled("div", {
+  backgroundColor: palette.sand,
+  paddingTop: "56px",
+  paddingBottom: "56px",
+  [layout.lg]: {
+    paddingTop: "0",
+    paddingBottom: "0",
+    minHeight: "75svh",
+    display: "flex",
+    alignItems: "stretch",
+  },
+});
+
+const Inner = styled("div", {
+  width: "100%",
+});
+
+const Column = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  height: "100%",
+  paddingTop: "0",
+  paddingBottom: "0",
+  [layout.lg]: { paddingTop: "24px", paddingBottom: "24px", minHeight: "75svh" },
+});
+
+const Heading = styled("h2", {
+  fontFamily: type.serif,
+  fontWeight: 400,
+  fontSize: "clamp(32px, 4.4vw, 60px)",
+  lineHeight: 1.08,
+  letterSpacing: "-0.015em",
+  margin: "0 0 32px 0",
+  flexGrow: 1,
+});
+
+const Body = styled("p", {
+  fontSize: "16px",
+  lineHeight: 1.55,
+  maxWidth: "52ch",
+  margin: "0 0 28px 0",
+});
+
+const Media = styled("div", {
+  display: "none",
+  [layout.lg]: { display: "block", height: "100%", paddingTop: "24px", paddingBottom: "24px" },
+});
+
+const Photo = styled("img", {
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+});
+
+const Footer = styled("footer", {
+  backgroundColor: palette.sand,
+  paddingLeft: layout.gutter,
+  paddingRight: layout.gutter,
+  paddingTop: "24px",
+  paddingBottom: "32px",
+  borderTop: `1px solid ${palette.rule}`,
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "12px",
+  justifyContent: "space-between",
+  ...type.eyebrow,
+  color: palette.inkMuted,
+  [layout.lg]: { paddingLeft: layout.gutterLg, paddingRight: layout.gutterLg },
+});
+
+export function Closing() {
+  return (
+    <>
+      <Panel>
+        <Inner>
+          <Grid>
+            <Cell $span={12} $spanLg={5} $startLg={2}>
+              <Column>
+                <Heading>{property.closing.heading}</Heading>
+                <div>
+                  <Body>{property.closing.body}</Body>
+                  <OutlineAction href={property.closing.cta.href}>
+                    {property.closing.cta.label}
+                  </OutlineAction>
+                </div>
+              </Column>
+            </Cell>
+            <Cell $span={12} $spanLg={5} $startLg={8}>
+              <Media>
+                <Photo
+                  src={property.closing.image.src}
+                  alt={property.closing.image.alt}
+                  loading="lazy"
+                />
+              </Media>
+            </Cell>
+          </Grid>
+        </Inner>
+      </Panel>
+
+      <Footer>
+        <span>{property.contact.address}</span>
+        <span>{property.contact.role}</span>
+      </Footer>
+    </>
+  );
+}

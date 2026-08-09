@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "baseui": "^18.2.0",
     "next": "16.3.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "styletron-engine-monolithic": "^1.0.0",
+    "styletron-react": "^6.1.1"
   },
   "devDependencies": {
     "@types/node": "^20",
