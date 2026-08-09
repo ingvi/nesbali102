@@ -10,6 +10,7 @@ import { FormControl } from "baseui/form-control";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
 import { Cell, Grid } from "./Primitives";
+import { useLang } from "./LangContext";
 
 const Panel = styled("div", {
   backgroundColor: palette.chalk,
@@ -121,6 +122,7 @@ const inputOverrides = {
 const emptyForm = { name: "", email: "", phone: "", message: "" };
 
 export function Enquiry() {
+  const { t, x } = useLang();
   const [form, setForm] = useState(emptyForm);
   const [viewing, setViewing] = useState(true);
   const [sent, setSent] = useState(false);
@@ -129,18 +131,18 @@ export function Enquiry() {
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
 
   /**
-   * There is no backend here on purpose: the enquiry opens in the seller's own
+   * There is no backend here on purpose: the enquiry opens in the sender's own
    * mail client with everything filled in. Swap this for a POST to an API route
    * if you would rather collect enquiries somewhere else.
    */
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const subject = `Enquiry — ${property.name}, ${property.area}`;
+    const subject = `${t("propertyEnquiry")} — ${property.name}, ${x(property.area)}`;
     const body = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      viewing ? "Would like to book a viewing: yes" : "",
+      `${t("formName")}: ${form.name}`,
+      `${t("formEmail")}: ${form.email}`,
+      `${t("formPhone")}: ${form.phone}`,
+      viewing ? `${t("formViewing")}: ✓` : "",
       "",
       form.message,
     ]
@@ -158,13 +160,13 @@ export function Enquiry() {
         <Grid>
           <Cell $span={12} $spanLg={5} $startLg={2}>
             <Heading>
-              Property enquiry
+              {t("propertyEnquiry")}
               <br />
               {property.name}
             </Heading>
           </Cell>
           <Cell $span={12} $spanLg={4} $startLg={8}>
-            <Intro>{property.viewing}</Intro>
+            <Intro>{x(property.viewing)}</Intro>
           </Cell>
         </Grid>
 
@@ -173,15 +175,15 @@ export function Enquiry() {
             <Cell $span={12} $spanLg={4} $startLg={2} $order={1} $orderLg={0}>
               <Details>
                 <div>
-                  <DetailLabel>Address</DetailLabel>
-                  <DetailValue>{property.contact.address}</DetailValue>
+                  <DetailLabel>{t("formAddress")}</DetailLabel>
+                  <DetailValue>{x(property.contact.address)}</DetailValue>
                 </div>
                 <div>
-                  <DetailLabel>Phone</DetailLabel>
+                  <DetailLabel>{t("formPhone")}</DetailLabel>
                   <DetailValue>{property.contact.phone}</DetailValue>
                 </div>
                 <div>
-                  <DetailLabel>Email</DetailLabel>
+                  <DetailLabel>{t("formEmail")}</DetailLabel>
                   <DetailValue>{property.contact.email}</DetailValue>
                 </div>
               </Details>
@@ -191,7 +193,7 @@ export function Enquiry() {
               <Fields>
                 <Row>
                   <Field>
-                    <FormControl label="Name">
+                    <FormControl label={t("formName")}>
                       <Input
                         value={form.name}
                         onChange={set("name")}
@@ -203,7 +205,7 @@ export function Enquiry() {
                     </FormControl>
                   </Field>
                   <Field>
-                    <FormControl label="Phone">
+                    <FormControl label={t("formPhone")}>
                       <Input
                         value={form.phone}
                         onChange={set("phone")}
@@ -216,7 +218,7 @@ export function Enquiry() {
                 </Row>
 
                 <Field>
-                  <FormControl label="Email">
+                  <FormControl label={t("formEmail")}>
                     <Input
                       value={form.email}
                       onChange={set("email")}
@@ -230,13 +232,13 @@ export function Enquiry() {
                 </Field>
 
                 <Field>
-                  <FormControl label="Message">
+                  <FormControl label={t("formMessage")}>
                     <Textarea
                       value={form.message}
                       onChange={set("message")}
                       name="message"
                       rows={5}
-                      placeholder="Anything you would like to know before a viewing?"
+                      placeholder={t("formMessagePlaceholder")}
                       overrides={inputOverrides}
                     />
                   </FormControl>
@@ -248,7 +250,7 @@ export function Enquiry() {
                     onChange={(event) => setViewing(event.currentTarget.checked)}
                     labelPlacement={LABEL_PLACEMENT.right}
                   >
-                    I would like to book a viewing
+                    {t("formViewing")}
                   </Checkbox>
                 </Consent>
 
@@ -267,13 +269,12 @@ export function Enquiry() {
                     },
                   }}
                 >
-                  Send
+                  {t("formSend")}
                 </Button>
 
                 {sent ? (
                   <Sent>
-                    Your mail app should have opened with the message ready to send. If
-                    nothing happened, write to {property.contact.email} directly.
+                    {t("formSent")} {property.contact.email}.
                   </Sent>
                 ) : null}
               </Fields>

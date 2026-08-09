@@ -87,10 +87,7 @@ export const Rule = styled<"hr", { $strong?: boolean }>("hr", ({ $strong }) => (
   width: "100%",
 }));
 
-/**
- * The bordered pill used for "See images", "Property enquiry" and so on. It
- * appears as both a link and a button, hence the two exports off one style.
- */
+/** The bordered pill used for "See images", "Property enquiry" and so on. */
 const outlineStyle = ({ $block }: { $block?: boolean }) => ({
   ...type.eyebrow,
   display: $block ? "flex" : "inline-flex",
@@ -115,7 +112,6 @@ const outlineStyle = ({ $block }: { $block?: boolean }) => ({
 });
 
 export const OutlineAction = styled<"a", { $block?: boolean }>("a", outlineStyle);
-export const OutlineButton = styled<"button", { $block?: boolean }>("button", outlineStyle);
 
 /** A quiet inline link with the underline offset far enough to read well. */
 export const TextLink = styled("a", {

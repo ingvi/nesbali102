@@ -5,6 +5,8 @@ style of [Fantastic Frank](https://www.fantasticfrank.com/) — full-bleed
 photography, a warm chalk page, a serif display face against a grotesque, and a
 12-column grid with a hairline gap.
 
+Icelandic and English, at `/is` and `/en`. The bare domain lands on Icelandic.
+
 Next.js 16 (App Router) · [Base Web](https://baseweb.design/) 18 · Styletron.
 
 ## Getting it running
@@ -19,9 +21,22 @@ Almost everything lives in one file.
 
 | What | Where |
 | --- | --- |
-| Price, size, rooms, description, highlights, facts, contact details | [content/property.ts](content/property.ts) |
+| Price, size, rooms, description, highlights, facts, contact details — in both languages | [content/property.ts](content/property.ts) |
+| Buttons, labels, nav, form chrome | [lib/i18n.ts](lib/i18n.ts) |
 | Photographs and floor plans | `public/images/` |
 | Colours, type scale, grid | [app/theme.ts](app/theme.ts) |
+
+Anything bilingual is written as `{ is: "…", en: "…" }`. Both sides are
+required, so a missing translation is a type error rather than a page that
+quietly falls back to English.
+
+### What is verified and what is not
+
+Values marked `✓ HMS` in `content/property.ts` come from the public register
+entry [F2068040](https://hms.is/fasteignaskra/117492/1024775/2068040) — size,
+year built, plot, assessed value, fire insurance value, property and land
+numbers. Values marked `TODO` are placeholders the register does not hold:
+the asking price, room counts, the description, and the contact details.
 
 ### Photographs
 
@@ -36,6 +51,9 @@ Two things to get right, because the layout leans on them:
   fill, so leave room around the subject.
 - **Gallery images** carry a `width` of `"full"`, `"half"` or `"inset"`. Alternating
   them is what gives the scroll its rhythm — `"half"` sits against the right edge.
+
+There is no lightbox, by design: the scrolling stack *is* the gallery, and
+"See images" simply scrolls to it. That is how the reference behaves.
 
 Once the real photographs are in, delete `scripts/make-placeholders.mjs`.
 
@@ -52,8 +70,9 @@ route.
 ### Before you publish
 
 - [ ] Real photographs in `public/images/`
-- [ ] Your phone number, email and the property number in `content/property.ts`
-- [ ] The price, size and plot verified against the official records
+- [ ] Every `TODO` in `content/property.ts` replaced — asking price, room counts,
+      description, highlights, your phone number and email
+- [ ] Both languages read naturally, not as translations of each other
 - [ ] `meta.siteUrl` set to the deployed domain, so link previews resolve
 
 ## Deploying
@@ -66,18 +85,24 @@ npx vercel deploy --prod
 
 ```
 app/
-  theme.ts       Base Web theme — palette, type scale, zero border radii
-  providers.tsx  Styletron engine, split server/client for SSR
-  layout.tsx     Fonts (Newsreader + Inter), metadata
+  theme.ts        Base Web theme — palette, type scale, zero border radii
+  providers.tsx   Styletron engine, split server/client for SSR
+  [lang]/
+    layout.tsx    Root layout — fonts, per-language metadata and hreflang
+    page.tsx      Renders the listing
+lib/i18n.ts       Languages, the chrome dictionary, the `L` type
 components/
-  Primitives.tsx Grid, Cell, Section, Eyebrow, the outline button
-  Hero.tsx       Full-bleed image and the title bar beneath it
-  Intro.tsx      Description, contact card, highlights, facts
-  Gallery.tsx    The scrolling photo sequence
-  Lightbox.tsx   Full-screen viewer (arrow keys work)
-  Enquiry.tsx    The form
-  Closing.tsx    Closing panel and footer
+  LangContext.tsx `t` for chrome strings, `x` for bilingual content
+  Primitives.tsx  Grid, Cell, Section, Eyebrow, the outline button
+  Hero.tsx        Full-bleed image and the title bar beneath it
+  Intro.tsx       Description, contact card, highlights, register facts
+  Gallery.tsx     The scrolling photo sequence
+  Enquiry.tsx     The form
+  Closing.tsx     Closing panel and footer
 ```
+
+Adding a third language means adding it to `LANGS`, filling in the `ui` block,
+and adding the key to every bilingual value — TypeScript will list them all.
 
 The 12-column grid is the load-bearing idea: every section places its content on
 the same columns (2–5 on the left, 7–11 on the right), which is what makes the

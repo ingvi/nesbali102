@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { styled } from "baseui";
 import { Nav } from "./Nav";
 import { Hero } from "./Hero";
@@ -10,7 +9,7 @@ import { FloorPlans } from "./FloorPlans";
 import { Location } from "./Location";
 import { Enquiry } from "./Enquiry";
 import { Closing } from "./Closing";
-import { Lightbox } from "./Lightbox";
+import { BackToTop } from "./BackToTop";
 import { Section } from "./Primitives";
 import { palette } from "@/app/theme";
 
@@ -20,18 +19,16 @@ const Page = styled("main", {
 });
 
 export function Listing() {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
   return (
     <Page>
       <Nav />
-      <Hero onOpenGallery={() => setLightboxIndex(0)} />
+      <Hero />
 
       <Section>
-        <Intro onOpenGallery={() => setLightboxIndex(0)} />
+        <Intro />
       </Section>
 
-      <Gallery onOpen={setLightboxIndex} />
+      <Gallery />
 
       <Section>
         <FloorPlans />
@@ -44,11 +41,7 @@ export function Listing() {
       <Enquiry />
       <Closing />
 
-      <Lightbox
-        index={lightboxIndex}
-        onChange={setLightboxIndex}
-        onClose={() => setLightboxIndex(null)}
-      />
+      <BackToTop />
     </Page>
   );
 }

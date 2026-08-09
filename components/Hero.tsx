@@ -3,7 +3,8 @@
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
-import { OutlineButton } from "./Primitives";
+import { OutlineAction } from "./Primitives";
+import { useLang } from "./LangContext";
 
 const HeroFrame = styled("div", {
   position: "relative",
@@ -99,30 +100,30 @@ const FactList = styled("ul", {
   [layout.lg]: { fontSize: "14px", gridTemplateColumns: "1fr", columnGap: "0" },
 });
 
-export function Hero({ onOpenGallery }: { onOpenGallery: () => void }) {
+export function Hero() {
+  const { t, x } = useLang();
+
   return (
     <div id="top">
       <HeroFrame>
-        <HeroImage src={property.hero.src} alt={property.hero.alt} />
+        <HeroImage src={property.hero.src} alt={x(property.hero.alt)} />
         <Scrim />
       </HeroFrame>
 
       <TitleBar>
         <TitleHalf>
           <Title>
-            {property.name}, <Area>{property.area}</Area>
+            {property.name}, <Area>{x(property.area)}</Area>
           </Title>
         </TitleHalf>
 
         <FactsHalf>
           <FactList>
-            {property.keyFacts.map((fact) => (
+            {x(property.keyFacts).map((fact) => (
               <li key={fact}>{fact}</li>
             ))}
           </FactList>
-          <OutlineButton type="button" onClick={onOpenGallery}>
-            See images
-          </OutlineButton>
+          <OutlineAction href="#photos">{t("seeImages")}</OutlineAction>
         </FactsHalf>
       </TitleBar>
     </div>

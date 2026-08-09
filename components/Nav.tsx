@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
+import { LANGS, langLabel } from "@/lib/i18n";
+import { useLang } from "./LangContext";
 
 const Bar = styled<"header", { $solid: boolean }>("header", ({ $solid }) => ({
   position: "fixed",
@@ -14,6 +16,7 @@ const Bar = styled<"header", { $solid: boolean }>("header", ({ $solid }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  gap: "16px",
   paddingLeft: layout.gutter,
   paddingRight: layout.gutter,
   height: "56px",
@@ -37,6 +40,7 @@ const Wordmark = styled("a", {
   fontWeight: 500,
   textDecoration: "none",
   color: "inherit",
+  whiteSpace: "nowrap",
 });
 
 const Links = styled("nav", {
@@ -56,22 +60,35 @@ const NavLink = styled("a", {
   ":hover": { opacity: 1 },
 });
 
-/** On narrow screens the nav collapses to a single call-to-action. */
-const MobileAction = styled("a", {
+const Right = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "18px",
+});
+
+/** ÍS · EN — the switch loads the same listing in the other language. */
+const LangSwitch = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+});
+
+const LangItem = styled<"a", { $active: boolean }>("a", ({ $active }) => ({
   ...type.eyebrow,
   textDecoration: "none",
   color: "inherit",
-  [layout.md]: { display: "none" },
-});
-
-const links = [
-  { label: "Photos", href: "#photos" },
-  { label: "Facts", href: "#facts" },
-  { label: "Location", href: "#location" },
-  { label: "Enquiry", href: "#enquiry" },
-];
+  opacity: $active ? 1 : 0.5,
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderBottomColor: $active ? "currentColor" : "transparent",
+  paddingBottom: "2px",
+  transitionProperty: "opacity",
+  transitionDuration: "200ms",
+  ":hover": { opacity: 1 },
+}));
 
 export function Nav() {
+  const { lang, t } = useLang();
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -82,17 +99,34 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const links = [
+    { label: t("navPhotos"), href: "#photos" },
+    { label: t("navFacts"), href: "#facts" },
+    { label: t("navLocation"), href: "#location" },
+    { label: t("navEnquiry"), href: "#enquiry" },
+  ];
+
   return (
     <Bar $solid={solid}>
       <Wordmark href="#top">{property.name}</Wordmark>
-      <Links>
-        {links.map((link) => (
-          <NavLink key={link.href} href={link.href}>
-            {link.label}
-          </NavLink>
-        ))}
-      </Links>
-      <MobileAction href="#enquiry">Enquiry</MobileAction>
+
+      <Right>
+        <Links>
+          {links.map((link) => (
+            <NavLink key={link.href} href={link.href}>
+              {link.label}
+            </NavLink>
+          ))}
+        </Links>
+
+        <LangSwitch>
+          {LANGS.map((code) => (
+            <LangItem key={code} href={`/${code}`} hrefLang={code} $active={code === lang}>
+              {langLabel[code]}
+            </LangItem>
+          ))}
+        </LangSwitch>
+      </Right>
     </Bar>
   );
 }

@@ -4,6 +4,7 @@ import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
 import { Cell, Grid, OutlineAction } from "./Primitives";
+import { useLang } from "./LangContext";
 
 const Panel = styled("div", {
   backgroundColor: palette.sand,
@@ -77,6 +78,8 @@ const Footer = styled("footer", {
 });
 
 export function Closing() {
+  const { x } = useLang();
+
   return (
     <>
       <Panel>
@@ -84,11 +87,11 @@ export function Closing() {
           <Grid>
             <Cell $span={12} $spanLg={5} $startLg={2}>
               <Column>
-                <Heading>{property.closing.heading}</Heading>
+                <Heading>{x(property.closing.heading)}</Heading>
                 <div>
-                  <Body>{property.closing.body}</Body>
+                  <Body>{x(property.closing.body)}</Body>
                   <OutlineAction href={property.closing.cta.href}>
-                    {property.closing.cta.label}
+                    {x(property.closing.cta.label)}
                   </OutlineAction>
                 </div>
               </Column>
@@ -97,7 +100,7 @@ export function Closing() {
               <Media>
                 <Photo
                   src={property.closing.image.src}
-                  alt={property.closing.image.alt}
+                  alt={x(property.closing.image.alt)}
                   loading="lazy"
                 />
               </Media>
@@ -107,8 +110,8 @@ export function Closing() {
       </Panel>
 
       <Footer>
-        <span>{property.contact.address}</span>
-        <span>{property.contact.role}</span>
+        <span>{x(property.contact.address)}</span>
+        <span>{x(property.contact.role)}</span>
       </Footer>
     </>
   );

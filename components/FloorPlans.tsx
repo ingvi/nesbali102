@@ -4,6 +4,8 @@ import { styled } from "baseui";
 import { layout, palette } from "@/app/theme";
 import { property } from "@/content/property";
 import { Cell, Eyebrow, Grid } from "./Primitives";
+import { useLang } from "./LangContext";
+import type { L } from "@/lib/i18n";
 
 const PlanFigure = styled("figure", {
   margin: 0,
@@ -32,20 +34,20 @@ const Stack = styled("div", {
 });
 
 export function FloorPlans() {
-  const plans: ReadonlyArray<{ src: string; alt: string; label: string }> =
-    property.floorPlans;
+  const { t, x } = useLang();
+  const plans: ReadonlyArray<{ src: string; alt: L; label: L }> = property.floorPlans;
   if (plans.length === 0) return null;
 
   return (
     <Grid>
       <Cell $span={12} $spanLg={10} $startLg={2}>
         <div id="floor-plans" style={{ scrollMarginTop: "88px" }}>
-          <Eyebrow>Floor plans</Eyebrow>
+          <Eyebrow>{t("floorPlans")}</Eyebrow>
           <Stack>
             {plans.map((plan) => (
               <PlanFigure key={plan.src}>
-                <PlanImage src={plan.src} alt={plan.alt} loading="lazy" />
-                <PlanCaption>{plan.label}</PlanCaption>
+                <PlanImage src={plan.src} alt={x(plan.alt)} loading="lazy" />
+                <PlanCaption>{x(plan.label)}</PlanCaption>
               </PlanFigure>
             ))}
           </Stack>

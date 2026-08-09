@@ -3,7 +3,8 @@
 import { styled } from "baseui";
 import { palette } from "@/app/theme";
 import { property } from "@/content/property";
-import { Cell, Eyebrow, Grid, OutlineAction } from "./Primitives";
+import { Cell, Eyebrow, Grid, OutlineAction, TextLink } from "./Primitives";
+import { useLang } from "./LangContext";
 
 const MapFrame = styled("div", {
   position: "relative",
@@ -40,23 +41,30 @@ const Address = styled("p", {
 });
 
 export function Location() {
+  const { t, x } = useLang();
+
   return (
     <Grid>
       <Cell $span={12} $spanLg={10} $startLg={2}>
         <div id="location" style={{ scrollMarginTop: "88px" }}>
-          <Eyebrow>Map of the area</Eyebrow>
+          <Eyebrow>{t("mapOfArea")}</Eyebrow>
           <MapFrame>
             <MapEmbed
               src={property.map.embedSrc}
-              title={`Map showing ${property.map.label}`}
+              title={`${t("mapOfArea")} — ${x(property.map.label)}`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </MapFrame>
           <Meta>
-            <Address>{property.map.label}</Address>
+            <Address>
+              {x(property.map.label)} ·{" "}
+              <TextLink href={property.map.registryHref} target="_blank" rel="noreferrer">
+                {x(property.map.registryLabel)}
+              </TextLink>
+            </Address>
             <OutlineAction href={property.map.href} target="_blank" rel="noreferrer">
-              Open in maps
+              {t("openInMaps")}
             </OutlineAction>
           </Meta>
         </div>
