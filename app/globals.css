@@ -40,6 +40,14 @@ html {
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /*
+   * The reference sets everything on a 14px body with a flat -0.24px of
+   * tracking, serif headings included. It is a tighter, more printed scale
+   * than a typical web page — keep it, or the whole thing reads oversized.
+   */
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.24px;
   overflow-x: hidden;
 }
 

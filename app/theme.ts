@@ -43,6 +43,14 @@ const typography: Record<string, Partial<Font>> = {};
 for (const token of sansTokens) typography[token] = { fontFamily: sans };
 for (const token of serifTokens) typography[token] = { fontFamily: serif, fontWeight: 400 };
 
+// The tokens Base Web's form controls actually read, pinned to our scale.
+typography.LabelMedium = { fontFamily: sans, fontSize: "12px", lineHeight: 1.4 };
+typography.LabelSmall = { fontFamily: sans, fontSize: "11px", lineHeight: 1.4 };
+typography.ParagraphMedium = { fontFamily: sans, fontSize: "14px", lineHeight: 1.4 };
+typography.ParagraphSmall = { fontFamily: sans, fontSize: "12px", lineHeight: 1.4 };
+typography.font300 = { fontFamily: sans, fontSize: "12px", lineHeight: 1.4 };
+typography.font400 = { fontFamily: sans, fontSize: "14px", lineHeight: 1.4 };
+
 export const theme = createLightTheme({
   colors: {
     primary: palette.ink,
@@ -102,10 +110,24 @@ export const type = {
   /** The small uppercase treatment used on buttons, labels and eyebrow text. */
   eyebrow: {
     fontFamily: sans,
-    fontSize: "12px",
+    fontSize: "11px",
     lineHeight: 1.2,
     letterSpacing: "0.08em",
     textTransform: "uppercase" as const,
+  },
+  /**
+   * The reference's type scale, measured at a 1132px viewport. Everything on
+   * the page comes off these five sizes.
+   */
+  size: {
+    /** Property name, section headings. 32px on the reference. */
+    display: "clamp(24px, 2.8vw, 34px)",
+    /** The big closing line. 44px on the reference. */
+    displayLarge: "clamp(28px, 3.9vw, 48px)",
+    /** Description paragraphs. */
+    body: "14px",
+    /** Facts table, contact block, shortcuts, key facts under the title. */
+    small: "12px",
   },
 } as const;
 

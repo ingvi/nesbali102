@@ -36,18 +36,18 @@ const Column = styled("div", {
 const Heading = styled("h2", {
   fontFamily: type.serif,
   fontWeight: 400,
-  fontSize: "clamp(32px, 4.4vw, 60px)",
-  lineHeight: 1.08,
-  letterSpacing: "-0.015em",
+  fontSize: type.size.displayLarge,
+  lineHeight: 1.15,
+  letterSpacing: "-0.24px",
   margin: "0 0 32px 0",
   flexGrow: 1,
 });
 
 const Body = styled("p", {
-  fontSize: "16px",
-  lineHeight: 1.55,
-  maxWidth: "52ch",
-  margin: "0 0 28px 0",
+  fontSize: type.size.body,
+  lineHeight: 1.4,
+  maxWidth: "56ch",
+  margin: "0 0 24px 0",
 });
 
 const Media = styled("div", {

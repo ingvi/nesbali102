@@ -66,6 +66,15 @@ const Right = styled("div", {
   gap: "18px",
 });
 
+/** The section links collapse below md, so keep one way through on mobile. */
+const MobileAction = styled("a", {
+  ...type.eyebrow,
+  textDecoration: "none",
+  color: "inherit",
+  opacity: 0.85,
+  [layout.md]: { display: "none" },
+});
+
 /** ÍS · EN — the switch loads the same listing in the other language. */
 const LangSwitch = styled("div", {
   display: "flex",
@@ -118,6 +127,8 @@ export function Nav() {
             </NavLink>
           ))}
         </Links>
+
+        <MobileAction href="#enquiry">{t("navEnquiry")}</MobileAction>
 
         <LangSwitch>
           {LANGS.map((code) => (

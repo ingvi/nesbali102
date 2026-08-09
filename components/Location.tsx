@@ -1,7 +1,7 @@
 "use client";
 
 import { styled } from "baseui";
-import { palette } from "@/app/theme";
+import { palette, type } from "@/app/theme";
 import { property } from "@/content/property";
 import { Cell, Eyebrow, Grid, OutlineAction, TextLink } from "./Primitives";
 import { useLang } from "./LangContext";
@@ -36,7 +36,7 @@ const Meta = styled("div", {
 
 const Address = styled("p", {
   margin: 0,
-  fontSize: "15px",
+  fontSize: type.size.small,
   color: palette.inkMuted,
 });
 

@@ -19,7 +19,7 @@ const PlanImage = styled("img", {
 });
 
 const PlanCaption = styled("figcaption", {
-  fontSize: "13px",
+  fontSize: "11px",
   letterSpacing: "0.08em",
   textTransform: "uppercase",
   color: palette.inkMuted,

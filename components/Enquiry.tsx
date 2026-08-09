@@ -22,16 +22,16 @@ const Panel = styled("div", {
 const Heading = styled("h2", {
   fontFamily: type.serif,
   fontWeight: 400,
-  fontSize: "clamp(30px, 3.4vw, 46px)",
-  lineHeight: 1.12,
-  letterSpacing: "-0.012em",
+  fontSize: type.size.display,
+  lineHeight: 1.15,
+  letterSpacing: "-0.24px",
   margin: "0 0 24px 0",
 });
 
 const Intro = styled("p", {
   margin: 0,
-  fontSize: "16px",
-  lineHeight: 1.55,
+  fontSize: type.size.body,
+  lineHeight: 1.4,
   maxWidth: "56ch",
 });
 
@@ -51,7 +51,7 @@ const DetailLabel = styled("span", {
 });
 
 const DetailValue = styled("span", {
-  fontSize: "15px",
+  fontSize: type.size.small,
 });
 
 const Fields = styled("div", {
@@ -88,8 +88,8 @@ const Consent = styled("div", {
 const Sent = styled("p", {
   ...type.eyebrow,
   textTransform: "none",
-  letterSpacing: "0",
-  fontSize: "14px",
+  letterSpacing: "-0.24px",
+  fontSize: type.size.small,
   color: palette.inkMuted,
   margin: "16px 0 0 0",
 });
@@ -112,7 +112,7 @@ const inputOverrides = {
       backgroundColor: "transparent",
       paddingLeft: "0px",
       paddingRight: "0px",
-      fontSize: "16px",
+      fontSize: type.size.body,
       "::placeholder": { color: palette.inkMuted },
     },
   },

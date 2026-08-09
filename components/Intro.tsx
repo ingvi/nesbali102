@@ -14,35 +14,39 @@ import {
 } from "./Primitives";
 import { useLang } from "./LangContext";
 
+/**
+ * The reference runs its whole description at one size and indents the first
+ * paragraph rather than setting a larger lead — so this is Body plus an indent.
+ */
 const Lead = styled("p", {
-  fontFamily: type.serif,
-  fontSize: "clamp(22px, 2vw, 27px)",
-  lineHeight: 1.34,
-  letterSpacing: "-0.008em",
-  margin: "0 0 28px 0",
-  [layout.lg]: { margin: "0 0 32px 0" },
+  fontFamily: type.sans,
+  fontSize: type.size.body,
+  lineHeight: 1.4,
+  margin: "0 0 16px 0",
+  maxWidth: "62ch",
+  [layout.lg]: { textIndent: "3em" },
 });
 
 const Body = styled("p", {
   fontFamily: type.sans,
-  fontSize: "16px",
-  lineHeight: 1.55,
-  margin: "0 0 20px 0",
+  fontSize: type.size.body,
+  lineHeight: 1.4,
+  margin: "0 0 16px 0",
   maxWidth: "62ch",
   ":last-child": { marginBottom: 0 },
 });
 
 const ContactName = styled("p", {
   fontFamily: type.serif,
-  fontSize: "24px",
+  fontSize: "20px",
   lineHeight: 1.2,
-  margin: "0 0 10px 0",
+  margin: "0 0 8px 0",
 });
 
 const ContactRow = styled("p", {
   fontFamily: type.sans,
-  fontSize: "14px",
-  lineHeight: 1.5,
+  fontSize: type.size.small,
+  lineHeight: 1.4,
   margin: 0,
   color: palette.inkMuted,
 });
@@ -72,10 +76,10 @@ const HighlightList = styled("ul", {
 
 const HighlightItem = styled("li", {
   fontFamily: type.sans,
-  fontSize: "15px",
+  fontSize: type.size.body,
   lineHeight: 1.4,
-  paddingTop: "12px",
-  paddingBottom: "12px",
+  paddingTop: "10px",
+  paddingBottom: "10px",
   borderBottom: `1px solid ${palette.rule}`,
   ":first-child": { borderTop: `1px solid ${palette.rule}` },
 });
@@ -90,21 +94,23 @@ const FactRow = styled("div", {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "12px",
-  paddingTop: "12px",
-  paddingBottom: "12px",
+  paddingTop: "10px",
+  paddingBottom: "10px",
   borderBottom: `1px solid ${palette.rule}`,
 });
 
 const FactLabel = styled("dt", {
   fontFamily: type.sans,
-  fontSize: "15px",
+  fontSize: type.size.small,
+  lineHeight: 1.35,
   margin: 0,
   color: palette.inkMuted,
 });
 
 const FactValue = styled("dd", {
   fontFamily: type.sans,
-  fontSize: "15px",
+  fontSize: type.size.small,
+  lineHeight: 1.35,
   margin: 0,
 });
 
@@ -112,14 +118,15 @@ const Shortcuts = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "10px",
-  marginTop: "28px",
+  gap: "8px",
+  marginTop: "24px",
+  fontSize: type.size.small,
 });
 
 /** Credits the register the figures above come from. */
 const Source = styled("p", {
   fontFamily: type.sans,
-  fontSize: "13px",
+  fontSize: type.size.small,
   color: palette.inkMuted,
   margin: "12px 0 0 0",
 });

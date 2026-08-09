@@ -73,9 +73,9 @@ const FactsHalf = styled("div", {
 const Title = styled("h1", {
   fontFamily: type.serif,
   fontWeight: 400,
-  fontSize: "clamp(28px, 3.6vw, 44px)",
-  lineHeight: 1.12,
-  letterSpacing: "-0.012em",
+  fontSize: type.size.display,
+  lineHeight: 1.15,
+  letterSpacing: "-0.24px",
   margin: 0,
   color: palette.ink,
 });
@@ -88,16 +88,16 @@ const Area = styled("em", {
 const FactList = styled("ul", {
   ...type.eyebrow,
   textTransform: "none",
-  letterSpacing: "0",
-  fontSize: "13px",
-  lineHeight: 1.4,
+  letterSpacing: "-0.24px",
+  fontSize: type.size.small,
+  lineHeight: 1.2,
   listStyle: "none",
   margin: 0,
   padding: 0,
   display: "grid",
   gridTemplateColumns: "repeat(2, auto)",
   columnGap: "18px",
-  [layout.lg]: { fontSize: "14px", gridTemplateColumns: "1fr", columnGap: "0" },
+  [layout.lg]: { gridTemplateColumns: "1fr", columnGap: "0" },
 });
 
 export function Hero() {
