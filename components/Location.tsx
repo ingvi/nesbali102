@@ -3,14 +3,13 @@
 import { styled } from "baseui";
 import { palette, type } from "@/app/theme";
 import { property } from "@/content/property";
-import { Cell, Eyebrow, Grid, OutlineAction, TextLink } from "./Primitives";
+import { Block, BlockBody, BlockLabel, Cell, Grid, OutlineAction, TextLink } from "./Primitives";
 import { useLang } from "./LangContext";
 
 const MapFrame = styled("div", {
   position: "relative",
   width: "100%",
   aspectRatio: "16 / 9",
-  border: `1px solid ${palette.rule}`,
   backgroundColor: palette.sand,
   overflow: "hidden",
 });
@@ -31,12 +30,13 @@ const Meta = styled("div", {
   alignItems: "center",
   justifyContent: "space-between",
   gap: "16px",
-  marginTop: "20px",
+  marginTop: "16px",
 });
 
 const Address = styled("p", {
   margin: 0,
   fontSize: type.size.small,
+  lineHeight: 1.4,
   color: palette.inkMuted,
 });
 
@@ -47,26 +47,30 @@ export function Location() {
     <Grid>
       <Cell $span={12} $spanLg={10} $startLg={2}>
         <div id="location" style={{ scrollMarginTop: "88px" }}>
-          <Eyebrow>{t("mapOfArea")}</Eyebrow>
-          <MapFrame>
-            <MapEmbed
-              src={property.map.embedSrc}
-              title={`${t("mapOfArea")} — ${x(property.map.label)}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </MapFrame>
-          <Meta>
-            <Address>
-              {x(property.map.label)} ·{" "}
-              <TextLink href={property.map.registryHref} target="_blank" rel="noreferrer">
-                {x(property.map.registryLabel)}
-              </TextLink>
-            </Address>
-            <OutlineAction href={property.map.href} target="_blank" rel="noreferrer">
-              {t("openInMaps")}
-            </OutlineAction>
-          </Meta>
+          <Block>
+            <BlockLabel>{t("mapOfArea")}</BlockLabel>
+            <BlockBody>
+              <MapFrame>
+                <MapEmbed
+                  src={property.map.embedSrc}
+                  title={`${t("mapOfArea")} — ${x(property.map.label)}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </MapFrame>
+              <Meta>
+                <Address>
+                  {x(property.map.label)} ·{" "}
+                  <TextLink href={property.map.registryHref} target="_blank" rel="noreferrer">
+                    {x(property.map.registryLabel)}
+                  </TextLink>
+                </Address>
+                <OutlineAction href={property.map.href} target="_blank" rel="noreferrer">
+                  {t("openInMaps")}
+                </OutlineAction>
+              </Meta>
+            </BlockBody>
+          </Block>
         </div>
       </Cell>
     </Grid>

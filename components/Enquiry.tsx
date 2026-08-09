@@ -44,10 +44,10 @@ const Details = styled("div", {
 });
 
 const DetailLabel = styled("span", {
-  ...type.eyebrow,
+  ...type.label,
   color: palette.inkMuted,
   display: "block",
-  marginBottom: "4px",
+  marginBottom: "2px",
 });
 
 const DetailValue = styled("span", {

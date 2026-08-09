@@ -63,22 +63,42 @@ export const Section = styled<"section", { $tight?: boolean; $sand?: boolean }>(
   }),
 );
 
-/** The small uppercase label that sits above every block of content. */
-const eyebrowStyle = {
-  ...type.eyebrow,
-  margin: "0 0 20px 0",
+/**
+ * Every block on the page is named from a narrow column to its left rather than
+ * by a heading above it. That one device is most of the layout's character: it
+ * keeps the labels out of the reading line and lets the content start clean.
+ *
+ *   <Block>
+ *     <BlockLabel>Highlights</BlockLabel>
+ *     <BlockBody>…</BlockBody>
+ *   </Block>
+ */
+export const Block = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr)",
+  rowGap: "12px",
+  [layout.lg]: {
+    gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+    columnGap: layout.columnGapLg,
+    rowGap: "0px",
+  },
+});
+
+const blockLabelStyle = {
+  ...type.label,
+  margin: 0,
   color: palette.ink,
-  fontWeight: 400,
+  [layout.lg]: { gridColumn: "span 1 / span 1" },
 } as const;
 
-export const Eyebrow = styled("h2", eyebrowStyle);
+export const BlockLabel = styled("h2", blockLabelStyle);
 
-/**
- * Styletron types `$as` to the original tag, so the variants that need a
- * different element get their own component rather than a runtime `as` prop.
- */
-export const EyebrowText = styled("p", eyebrowStyle);
-export const EyebrowTight = styled("p", { ...eyebrowStyle, marginBottom: "0px" });
+/** Styletron types `$as` to the original tag, so a `<p>` variant is its own export. */
+export const BlockLabelText = styled("p", blockLabelStyle);
+
+export const BlockBody = styled("div", {
+  [layout.lg]: { gridColumn: "span 4 / span 4" },
+});
 
 export const Rule = styled<"hr", { $strong?: boolean }>("hr", ({ $strong }) => ({
   border: "none",

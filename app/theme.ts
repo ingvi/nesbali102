@@ -107,13 +107,25 @@ export const theme = createLightTheme({
 export const type = {
   serif,
   sans,
-  /** The small uppercase treatment used on buttons, labels and eyebrow text. */
+  /**
+   * Uppercase is reserved for buttons. Section labels use `label` below —
+   * the reference keeps them quiet and sentence-case, which is what stops the
+   * page reading like a spec sheet.
+   */
   eyebrow: {
     fontFamily: sans,
     fontSize: "11px",
     lineHeight: 1.2,
     letterSpacing: "0.08em",
     textTransform: "uppercase" as const,
+  },
+  /** The small sentence-case label that names a block from its own column. */
+  label: {
+    fontFamily: sans,
+    fontSize: "12px",
+    lineHeight: 1.15,
+    letterSpacing: "-0.24px",
+    fontWeight: 400,
   },
   /**
    * The reference's type scale, measured at a 1132px viewport. Everything on

@@ -2,21 +2,23 @@
 
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
-import { property } from "@/content/property";
+import { property, type Fact } from "@/content/property";
 import {
+  Block,
+  BlockBody,
+  BlockLabel,
   Cell,
-  Eyebrow,
-  EyebrowText,
-  EyebrowTight,
   Grid,
   OutlineAction,
+  Rule,
   TextLink,
 } from "./Primitives";
 import { useLang } from "./LangContext";
 
 /**
- * The reference runs its whole description at one size and indents the first
- * paragraph rather than setting a larger lead — so this is Body plus an indent.
+ * The description reads as one block at one size, with the opening paragraph
+ * indented — the reference sets no separate lead, and a larger opener would
+ * compete with the property name a few centimetres above it.
  */
 const Lead = styled("p", {
   fontFamily: type.sans,
@@ -36,73 +38,71 @@ const Body = styled("p", {
   ":last-child": { marginBottom: 0 },
 });
 
-const ContactName = styled("p", {
-  fontFamily: type.serif,
-  fontSize: "20px",
-  lineHeight: 1.2,
-  margin: "0 0 8px 0",
-});
+/* ── The seller ───────────────────────────────────────────────────────── */
 
-const ContactRow = styled("p", {
-  fontFamily: type.sans,
-  fontSize: type.size.small,
-  lineHeight: 1.4,
-  margin: 0,
-  color: palette.inkMuted,
-});
-
-const ContactCard = styled("div", {
+const Contact = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "0",
-  paddingTop: "20px",
-  borderTop: `1px solid ${palette.rule}`,
   marginBottom: "48px",
   [layout.lg]: { marginBottom: 0 },
+});
+
+const Role = styled("p", {
+  ...type.label,
+  color: palette.inkMuted,
+  margin: "0 0 14px 0",
+});
+
+const ContactLine = styled("p", {
+  fontFamily: type.sans,
+  fontSize: type.size.small,
+  lineHeight: 1.5,
+  margin: 0,
 });
 
 const ButtonSpacer = styled("div", {
   marginTop: "24px",
   width: "100%",
-  [layout.lg]: { width: "auto", minWidth: "220px" },
+  [layout.lg]: { width: "auto", minWidth: "200px" },
 });
 
-const HighlightList = styled("ul", {
-  listStyle: "none",
+/* ── Highlights ───────────────────────────────────────────────────────── */
+
+/**
+ * The one place on the page where the serif does something other than a
+ * heading. Set large and unruled, the list reads as the property's own claims
+ * rather than as more table.
+ */
+const HighlightLine = styled("p", {
+  fontFamily: type.serif,
+  fontSize: "clamp(20px, 2.2vw, 26px)",
+  lineHeight: 1.2,
+  letterSpacing: "-0.24px",
+  // Just enough to keep a wrapped line from reading as two separate points.
+  margin: "0 0 4px 0",
+});
+
+/* ── Facts ────────────────────────────────────────────────────────────── */
+
+const FactList = styled("dl", {
   margin: 0,
   padding: 0,
 });
 
-const HighlightItem = styled("li", {
-  fontFamily: type.sans,
-  fontSize: type.size.body,
-  lineHeight: 1.4,
-  paddingTop: "10px",
-  paddingBottom: "10px",
-  borderBottom: `1px solid ${palette.rule}`,
-  ":first-child": { borderTop: `1px solid ${palette.rule}` },
-});
-
-const FactTable = styled("dl", {
-  margin: 0,
-  padding: 0,
-  borderTop: `1px solid ${palette.rule}`,
-});
-
+/** Label two columns, value three — no rules, 8px apart, as the reference has it. */
 const FactRow = styled("div", {
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "12px",
-  paddingTop: "10px",
-  paddingBottom: "10px",
-  borderBottom: `1px solid ${palette.rule}`,
+  gridTemplateColumns: "2fr 3fr",
+  columnGap: "16px",
+  marginBottom: "8px",
+  [layout.lg]: { columnGap: layout.columnGapLg },
 });
 
 const FactLabel = styled("dt", {
   fontFamily: type.sans,
   fontSize: type.size.small,
-  lineHeight: 1.35,
+  lineHeight: 1.4,
   margin: 0,
   color: palette.inkMuted,
 });
@@ -110,38 +110,60 @@ const FactLabel = styled("dt", {
 const FactValue = styled("dd", {
   fontFamily: type.sans,
   fontSize: type.size.small,
-  lineHeight: 1.35,
+  lineHeight: 1.4,
   margin: 0,
+});
+
+const RuleSpacer = styled("div", {
+  marginTop: "20px",
+  marginBottom: "20px",
+});
+
+const Source = styled("p", {
+  fontFamily: type.sans,
+  fontSize: type.size.small,
+  lineHeight: 1.4,
+  color: palette.inkMuted,
+  margin: "16px 0 0 0",
 });
 
 const Shortcuts = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  gap: "8px",
-  marginTop: "24px",
+  gap: "6px",
   fontSize: type.size.small,
 });
 
-/** Credits the register the figures above come from. */
-const Source = styled("p", {
-  fontFamily: type.sans,
-  fontSize: type.size.small,
-  color: palette.inkMuted,
-  margin: "12px 0 0 0",
-});
+/* ── Spacing between the bands ────────────────────────────────────────── */
 
-/** Separates the description row from the highlights/facts row. */
 const BlockGap = styled("div", {
-  height: "56px",
-  [layout.lg]: { height: "96px" },
+  height: "48px",
+  [layout.lg]: { height: "72px" },
 });
 
-/** Keeps stacked cells apart on mobile; on desktop they sit side by side. */
 const StackGap = styled("div", {
-  marginBottom: "56px",
-  [layout.lg]: { marginBottom: "0px" },
+  marginBottom: "48px",
+  [layout.lg]: { marginBottom: 0 },
 });
+
+const BlockSpacer = styled("div", {
+  height: "40px",
+});
+
+function Rows({ rows }: { rows: readonly Fact[] }) {
+  const { x } = useLang();
+  return (
+    <FactList>
+      {rows.map((fact) => (
+        <FactRow key={fact.label.en}>
+          <FactLabel>{x(fact.label)}</FactLabel>
+          <FactValue>{x(fact.value)}</FactValue>
+        </FactRow>
+      ))}
+    </FactList>
+  );
+}
 
 export function Intro() {
   const { t, x } = useLang();
@@ -150,23 +172,23 @@ export function Intro() {
     <>
       <Grid>
         <Cell $span={12} $spanLg={4} $startLg={2} $orderLg={0}>
-          <ContactCard>
-            <EyebrowText>{x(property.contact.role)}</EyebrowText>
-            <ContactName>{property.contact.name}</ContactName>
-            <ContactRow>
+          <Contact>
+            <Role>{x(property.contact.role)}</Role>
+            <ContactLine>{property.contact.name}</ContactLine>
+            <ContactLine>
               <TextLink href={property.contact.phoneHref}>{property.contact.phone}</TextLink>
-            </ContactRow>
-            <ContactRow>
+            </ContactLine>
+            <ContactLine>
               <TextLink href={`mailto:${property.contact.email}`}>
                 {property.contact.email}
               </TextLink>
-            </ContactRow>
+            </ContactLine>
             <ButtonSpacer>
               <OutlineAction href="#enquiry" $block>
                 {t("propertyEnquiry")}
               </OutlineAction>
             </ButtonSpacer>
-          </ContactCard>
+          </Contact>
         </Cell>
 
         <Cell $span={12} $spanLg={6} $startLg={7} $orderLg={1}>
@@ -180,42 +202,54 @@ export function Intro() {
       <BlockGap />
 
       <Grid>
-        <Cell $span={12} $spanLg={4} $startLg={2}>
+        <Cell $span={12} $spanLg={5} $startLg={2}>
           <StackGap>
-            <Eyebrow>{t("highlights")}</Eyebrow>
-            <HighlightList>
-              {x(property.highlights).map((item) => (
-                <HighlightItem key={item}>{item}</HighlightItem>
-              ))}
-            </HighlightList>
-            <Shortcuts>
-              <OutlineAction href="#photos">{t("seeAllImages")}</OutlineAction>
-            </Shortcuts>
+            <Block>
+              <BlockLabel>{t("highlights")}</BlockLabel>
+              <BlockBody>
+                {x(property.highlights).map((item) => (
+                  <HighlightLine key={item}>{item}</HighlightLine>
+                ))}
+                <BlockSpacer />
+                <OutlineAction href="#photos">{t("seeAllImages")}</OutlineAction>
+              </BlockBody>
+            </Block>
           </StackGap>
         </Cell>
 
-        <Cell $span={12} $spanLg={4} $startLg={7}>
+        <Cell $span={12} $spanLg={5} $startLg={7}>
           <div id="facts" style={{ scrollMarginTop: "88px" }}>
-            <Eyebrow>{t("facts")}</Eyebrow>
-            <FactTable>
-              {property.facts.map((fact) => (
-                <FactRow key={fact.label.en}>
-                  <FactLabel>{x(fact.label)}</FactLabel>
-                  <FactValue>{x(fact.value)}</FactValue>
-                </FactRow>
-              ))}
-            </FactTable>
-            <Source>
-              <TextLink href={property.map.registryHref} target="_blank" rel="noreferrer">
-                {t("registrySource")}
-              </TextLink>
-            </Source>
-            <Shortcuts>
-              <EyebrowTight>{t("shortcuts")}</EyebrowTight>
-              <TextLink href="#location">{t("mapOfArea")}</TextLink>
-              <TextLink href="#enquiry">{t("propertyEnquiry")}</TextLink>
-              <TextLink href="#floor-plans">{t("floorPlans")}</TextLink>
-            </Shortcuts>
+            <Block>
+              <BlockLabel>{t("facts")}</BlockLabel>
+              <BlockBody>
+                <Rows rows={property.facts} />
+
+                <RuleSpacer>
+                  <Rule />
+                </RuleSpacer>
+
+                <Rows rows={property.registration} />
+
+                <Source>
+                  <TextLink href={property.map.registryHref} target="_blank" rel="noreferrer">
+                    {t("registrySource")}
+                  </TextLink>
+                </Source>
+              </BlockBody>
+            </Block>
+
+            <BlockSpacer />
+
+            <Block>
+              <BlockLabel>{t("shortcuts")}</BlockLabel>
+              <BlockBody>
+                <Shortcuts>
+                  <TextLink href="#location">{t("mapOfArea")}</TextLink>
+                  <TextLink href="#floor-plans">{t("floorPlans")}</TextLink>
+                  <TextLink href="#enquiry">{t("propertyEnquiry")}</TextLink>
+                </Shortcuts>
+              </BlockBody>
+            </Block>
           </div>
         </Cell>
       </Grid>

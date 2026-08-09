@@ -68,53 +68,45 @@ const lead: L = {
  */
 const description: LList = {
   is: [
-    "Eignin er skráð sem íbúð á hæð, byggð árið 1982, 279 fermetrar að stærð. Hún stendur á sameiginlegri lóð sem er 5.600 fermetrar.",
     "Nesbali liggur vestast á Seltjarnarnesi, þar sem byggðin endar og útivistarsvæðið tekur við. Gangan út á Gróttu tekur nokkrar mínútur, sundlaugin og Mýrarhúsaskóli eru í næsta nágrenni og stutt er inn í bæ.",
-    "TODO — hér skrifar þú um eignina sjálfa: herbergjaskipan, endurbætur, eldhúsið, útsýnið, hvernig birtan fer um húsið yfir daginn.",
+    "TODO — hér skrifar þú um eignina sjálfa: herbergjaskipan, endurbætur, eldhúsið, útsýnið, hvernig birtan fer um húsið yfir daginn. Ekki endurtaka tölurnar úr töflunni hér til hliðar; skrifaðu um það sem talan segir ekki.",
   ],
   en: [
-    "The property is registered as a flat on a floor, built in 1982, measuring 279 m². It sits on a shared plot of 5,600 m².",
     "Nesbali runs along the western edge of Seltjarnarnes, where the houses stop and the shoreline path begins. Grótta is a few minutes' walk away, the pool and the local school are close by, and central Reykjavík is a short drive.",
-    "TODO — write about the house itself here: the layout, any renovation, the kitchen, the views, the way the light moves through it over the course of a day.",
+    "TODO — write about the house itself here: the layout, any renovation, the kitchen, the views, the way the light moves through it over the course of a day. Do not restate the numbers from the table alongside; write the part the numbers cannot say.",
   ],
 };
 
-/** Drawn from the register so nothing here is invented. TODO — add your own. */
+/**
+ * These are set large in the serif, directly opposite the facts table — so they
+ * must not repeat it. Size, year and plot belong in the table; what goes here
+ * is what a number cannot carry. Keep each one to a single line.
+ */
 const highlights: LList = {
   is: [
-    "279 m² að stærð",
-    "Byggingarár 1982",
-    "Sameiginleg lóð, 5.600 m²",
     "Vestast á Seltjarnarnesi",
     "Stutt í Gróttu og Bakkatjörn",
-    "TODO — bættu við þínum atriðum",
+    "TODO — helsti kostur",
+    "TODO — annar kostur",
+    "TODO — þriðji kostur",
   ],
   en: [
-    "279 m² in total",
-    "Built in 1982",
-    "Shared plot of 5,600 m²",
     "Western edge of Seltjarnarnes",
     "Minutes from Grótta and Bakkatjörn",
-    "TODO — add your own points here",
+    "TODO — best feature",
+    "TODO — second feature",
+    "TODO — third feature",
   ],
 };
 
-/** ✓ HMS — straight from the register, both columns localised. */
+/**
+ * ✓ HMS — the rows a buyer actually reads, in the order they want them.
+ * Address and postcode are deliberately absent: they are already in the title
+ * and the contact block, and repeating them costs the table its authority.
+ */
 const facts: readonly Fact[] = [
   { label: { is: "Staða", en: "Status" }, value: { is: "Til sölu", en: "For sale" } },
   { label: { is: "Tegund", en: "Property type" }, value: registry.type },
-  {
-    label: { is: "Staðfang", en: "Address" },
-    value: { is: "Nesbali 102", en: "Nesbali 102" },
-  },
-  {
-    label: { is: "Sveitarfélag", en: "Municipality" },
-    value: { is: registry.municipality, en: registry.municipality },
-  },
-  {
-    label: { is: "Póstnúmer", en: "Postcode" },
-    value: { is: registry.postcode, en: registry.postcode },
-  },
   {
     label: { is: "Stærð", en: "Size" },
     value: { is: registry.size, en: registry.size },
@@ -124,21 +116,32 @@ const facts: readonly Fact[] = [
     value: { is: registry.builtYear, en: registry.builtYear },
   },
   {
-    label: { is: "Fasteignamat 2026", en: "Assessed value 2026" },
-    value: { is: registry.assessment2026, en: registry.assessment2026 },
+    label: { is: "Lóð", en: "Plot" },
+    value: {
+      is: `${registry.plotSize}, sameiginleg`,
+      en: `${registry.plotSize}, shared`,
+    },
   },
   {
-    label: { is: "Fasteignamat næsta árs", en: "Assessed value, next year" },
-    value: { is: registry.assessmentNextYear, en: registry.assessmentNextYear },
+    label: { is: "Sveitarfélag", en: "Municipality" },
+    value: { is: registry.municipality, en: registry.municipality },
+  },
+  {
+    label: { is: "Fasteignamat 2026", en: "Assessed value 2026" },
+    value: { is: registry.assessment2026, en: registry.assessment2026 },
   },
   {
     label: { is: "Brunabótamat", en: "Fire insurance value" },
     value: { is: registry.fireInsurance, en: registry.fireInsurance },
   },
-  {
-    label: { is: "Heildarstærð lóðar", en: "Total plot size" },
-    value: { is: registry.plotSize, en: registry.plotSize },
-  },
+];
+
+/**
+ * ✓ HMS — the identifiers. Real, and a buyer in Iceland will want them, but
+ * they are reference material rather than reading, so they sit in a quieter
+ * group below a rule.
+ */
+const registration: readonly Fact[] = [
   {
     label: { is: "Fasteignanúmer", en: "Property number" },
     value: { is: registry.propertyNumber, en: registry.propertyNumber },
@@ -157,6 +160,10 @@ const facts: readonly Fact[] = [
       is: `${registry.buildStage} / ${registry.assessmentStage}`,
       en: `${registry.buildStage} / ${registry.assessmentStage}`,
     },
+  },
+  {
+    label: { is: "Fasteignamat næsta árs", en: "Assessed value, next year" },
+    value: { is: registry.assessmentNextYear, en: registry.assessmentNextYear },
   },
 ];
 
@@ -211,6 +218,7 @@ export const property = {
   description,
   highlights,
   facts,
+  registration,
   gallery,
   floorPlans,
 
@@ -262,8 +270,13 @@ export const property = {
       en: "Nesbali 102, 170 Seltjarnarnes, Iceland",
     } as L,
     href: "https://www.google.com/maps/search/?api=1&query=Nesbali+102,+170+Seltjarnarnes,+Iceland",
+    /**
+     * TODO — the marker is placed from the street's rough position, not from a
+     * surveyed point. Drop a pin on openstreetmap.org, copy the lat/lon out of
+     * the URL, and replace both the bbox centre and the marker below.
+     */
     embedSrc:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-22.0400%2C64.1520%2C-22.0080%2C64.1650&layer=mapnik&marker=64.1585%2C-22.0240",
+      "https://www.openstreetmap.org/export/embed.html?bbox=-22.0330%2C64.1520%2C-22.0090%2C64.1630&layer=mapnik&marker=64.1571%2C-22.0212",
     /** The public register entry — buyers in Iceland will look for it. */
     registryHref: "https://hms.is/fasteignaskra/117492/1024775/2068040",
     registryLabel: { is: "Fasteignaskrá HMS", en: "HMS property register" } as L,

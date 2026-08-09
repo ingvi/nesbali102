@@ -37,7 +37,8 @@ export const ui = {
     propertyEnquiry: "Fyrirspurn um eignina",
 
     highlights: "Helstu atriði",
-    facts: "Upplýsingar úr fasteignaskrá",
+    facts: "Upplýsingar",
+    registration: "Skráning",
     shortcuts: "Flýtileiðir",
     floorPlans: "Teikningar",
     mapOfArea: "Kort af svæðinu",
@@ -74,7 +75,8 @@ export const ui = {
     propertyEnquiry: "Property enquiry",
 
     highlights: "Highlights",
-    facts: "Property register",
+    facts: "Facts",
+    registration: "Registration",
     shortcuts: "Shortcuts",
     floorPlans: "Floor plans",
     mapOfArea: "Map of the area",
