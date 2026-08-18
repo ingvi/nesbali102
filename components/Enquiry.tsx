@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { styled } from "baseui";
-import { Input } from "baseui/input";
-import { Textarea } from "baseui/textarea";
-import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
-import { Button, KIND, SIZE } from "baseui/button";
-import { FormControl } from "baseui/form-control";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
-import { Cell, Grid } from "./Primitives";
+import { Cell, Grid, OutlineAction } from "./Primitives";
 import { useLang } from "./LangContext";
 
+/**
+ * This section used to hold a form that built a `mailto:` link. It was removed
+ * deliberately. It could not tell whether the handoff to the visitor's mail app
+ * had worked, so it reported success either way; and an enquiry arriving as a
+ * plain email sits outside whatever process the agency actually uses to follow
+ * leads up. Calling, writing, or going through the agency's own form are all
+ * better routes, so those are what this offers.
+ */
 const Panel = styled("div", {
   backgroundColor: palette.chalk,
   paddingTop: "56px",
@@ -54,105 +56,56 @@ const DetailValue = styled("span", {
   fontSize: type.size.small,
 });
 
-const Fields = styled("div", {
+/* ── The two things a buyer actually does ─────────────────────────────── */
+
+const Routes = styled("div", {
   display: "flex",
   flexDirection: "column",
-  gap: "4px",
+  alignItems: "flex-start",
   marginTop: "40px",
   [layout.lg]: { marginTop: 0 },
 });
 
-const Row = styled("div", {
-  display: "grid",
-  gap: "4px",
-  [layout.lg]: { gridTemplateColumns: "repeat(2, minmax(0, 1fr))" },
-});
-
 /**
- * Base Web's FormControl renders its label and control as siblings rather than
- * inside a wrapper, so each one needs its own box before it can be laid out.
+ * The phone number and the address are the page's call to action, so they are
+ * set at heading size rather than buried in body copy — and both are live, so a
+ * phone dials and a laptop opens a message.
  */
-const Field = styled("div", {
-  display: "block",
-  minWidth: 0,
-});
-
-const Consent = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-  marginTop: "20px",
-  marginBottom: "28px",
-});
-
-const Sent = styled("p", {
-  ...type.eyebrow,
-  textTransform: "none",
+const BigLink = styled("a", {
+  fontFamily: type.serif,
+  fontWeight: 400,
+  fontSize: "clamp(20px, 2.2vw, 26px)",
+  lineHeight: 1.25,
   letterSpacing: "-0.24px",
-  fontSize: type.size.small,
-  color: palette.inkMuted,
-  margin: "16px 0 0 0",
+  color: palette.ink,
+  textDecoration: "none",
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderBottomColor: "transparent",
+  transitionProperty: "border-color",
+  transitionDuration: "200ms",
+  ":hover": { borderBottomColor: palette.ink },
 });
 
-/** Base Web inputs default to a filled well; this page wants a single rule. */
-const inputOverrides = {
-  Root: {
-    style: {
-      borderTopWidth: "0px",
-      borderLeftWidth: "0px",
-      borderRightWidth: "0px",
-      borderBottomWidth: "1px",
-      borderBottomStyle: "solid",
-      borderBottomColor: palette.ruleStrong,
-      backgroundColor: "transparent",
-    },
-  },
-  Input: {
-    style: {
-      backgroundColor: "transparent",
-      paddingLeft: "0px",
-      paddingRight: "0px",
-      fontSize: type.size.body,
-      "::placeholder": { color: palette.inkMuted },
-    },
-  },
-  InputContainer: { style: { backgroundColor: "transparent" } },
-};
+const RouteRow = styled("div", {
+  marginBottom: "14px",
+});
 
-const emptyForm = { name: "", email: "", phone: "", message: "" };
+const ButtonSpacer = styled("div", {
+  marginTop: "18px",
+});
+
+/** Sets expectations before the click: this one leaves for the agency's site. */
+const ButtonNote = styled("p", {
+  fontSize: type.size.small,
+  lineHeight: 1.4,
+  color: palette.inkMuted,
+  margin: "12px 0 0 0",
+  maxWidth: "44ch",
+});
 
 export function Enquiry() {
   const { t, x } = useLang();
-  const [form, setForm] = useState(emptyForm);
-  const [viewing, setViewing] = useState(true);
-  const [sent, setSent] = useState(false);
-
-  const set = (key: keyof typeof emptyForm) => (event: { target: { value: string } }) =>
-    setForm((prev) => ({ ...prev, [key]: event.target.value }));
-
-  /**
-   * There is no backend here on purpose: the enquiry opens in the sender's own
-   * mail client with everything filled in. Swap this for a POST to an API route
-   * if you would rather collect enquiries somewhere else.
-   */
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    const subject = `${t("propertyEnquiry")} — ${property.name}, ${x(property.area)}`;
-    const body = [
-      `${t("formName")}: ${form.name}`,
-      `${t("formEmail")}: ${form.email}`,
-      `${t("formPhone")}: ${form.phone}`,
-      viewing ? `${t("formViewing")}: ✓` : "",
-      "",
-      form.message,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.location.href = `mailto:${property.contact.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-  };
 
   return (
     <Panel>
@@ -170,119 +123,47 @@ export function Enquiry() {
           </Cell>
         </Grid>
 
-        <form onSubmit={onSubmit}>
-          <Grid>
-            <Cell $span={12} $spanLg={4} $startLg={2} $order={1} $orderLg={0}>
-              <Details>
-                <div>
-                  <DetailLabel>{t("formAddress")}</DetailLabel>
-                  <DetailValue>{x(property.contact.address)}</DetailValue>
-                </div>
-                <div>
-                  <DetailLabel>{t("formPhone")}</DetailLabel>
-                  <DetailValue>{property.contact.phone}</DetailValue>
-                </div>
-                <div>
-                  <DetailLabel>{t("formEmail")}</DetailLabel>
-                  <DetailValue>{property.contact.email}</DetailValue>
-                </div>
-              </Details>
-            </Cell>
+        <Grid>
+          <Cell $span={12} $spanLg={4} $startLg={2} $order={1} $orderLg={0}>
+            <Details>
+              <div>
+                <DetailLabel>{t("formAddress")}</DetailLabel>
+                <DetailValue>{x(property.contact.address)}</DetailValue>
+              </div>
+              <div>
+                <DetailLabel>{t("agent")}</DetailLabel>
+                <DetailValue>
+                  {property.contact.name} · {x(property.contact.role)}
+                </DetailValue>
+              </div>
+            </Details>
+          </Cell>
 
-            <Cell $span={12} $spanLg={5} $startLg={7} $order={0} $orderLg={1}>
-              <Fields>
-                <Row>
-                  <Field>
-                    <FormControl label={t("formName")}>
-                      <Input
-                        value={form.name}
-                        onChange={set("name")}
-                        required
-                        name="name"
-                        autoComplete="name"
-                        overrides={inputOverrides}
-                      />
-                    </FormControl>
-                  </Field>
-                  <Field>
-                    <FormControl label={t("formPhone")}>
-                      <Input
-                        value={form.phone}
-                        onChange={set("phone")}
-                        name="phone"
-                        autoComplete="tel"
-                        overrides={inputOverrides}
-                      />
-                    </FormControl>
-                  </Field>
-                </Row>
-
-                <Field>
-                  <FormControl label={t("formEmail")}>
-                    <Input
-                      value={form.email}
-                      onChange={set("email")}
-                      required
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      overrides={inputOverrides}
-                    />
-                  </FormControl>
-                </Field>
-
-                <Field>
-                  <FormControl label={t("formMessage")}>
-                    <Textarea
-                      value={form.message}
-                      onChange={set("message")}
-                      name="message"
-                      rows={5}
-                      placeholder={t("formMessagePlaceholder")}
-                      overrides={inputOverrides}
-                    />
-                  </FormControl>
-                </Field>
-
-                <Consent>
-                  <Checkbox
-                    checked={viewing}
-                    onChange={(event) => setViewing(event.currentTarget.checked)}
-                    labelPlacement={LABEL_PLACEMENT.right}
-                  >
-                    {t("formViewing")}
-                  </Checkbox>
-                </Consent>
-
-                <Button
-                  type="submit"
-                  kind={KIND.primary}
-                  size={SIZE.large}
-                  overrides={{
-                    BaseButton: {
-                      style: {
-                        ...type.eyebrow,
-                        fontSize: "12px",
-                        letterSpacing: "0.32px",
-                        width: "100%",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
-                      },
-                    },
-                  }}
+          <Cell $span={12} $spanLg={5} $startLg={7} $order={0} $orderLg={1}>
+            <Routes>
+              <RouteRow>
+                <DetailLabel>{t("formPhone")}</DetailLabel>
+                <BigLink href={property.contact.phoneHref}>{property.contact.phone}</BigLink>
+              </RouteRow>
+              <RouteRow>
+                <DetailLabel>{t("formEmail")}</DetailLabel>
+                <BigLink href={`mailto:${property.contact.email}`}>
+                  {property.contact.email}
+                </BigLink>
+              </RouteRow>
+              <ButtonSpacer>
+                <OutlineAction
+                  href={property.official.href}
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  {t("formSend")}
-                </Button>
-
-                {sent ? (
-                  <Sent>
-                    {t("formSent")} {property.contact.email}.
-                  </Sent>
-                ) : null}
-              </Fields>
-            </Cell>
-          </Grid>
-        </form>
+                  {x(property.official.enquireLabel)}
+                </OutlineAction>
+                <ButtonNote>{x(property.official.enquireNote)}</ButtonNote>
+              </ButtonSpacer>
+            </Routes>
+          </Cell>
+        </Grid>
       </div>
     </Panel>
   );

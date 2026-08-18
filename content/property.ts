@@ -369,8 +369,8 @@ export const property = {
   },
 
   viewing: {
-    is: "Skoðun er bókuð hjá Hreiðari Levý, löggiltum fasteignasala, í síma 661 6021 eða á hreidar@betristofan.is. Fyrirspurnin hér að neðan opnast í póstforritinu þínu.",
-    en: "Viewings are booked with Hreiðar Levý, licensed estate agent, on +354 661 6021 or at hreidar@betristofan.is. The form below opens in your own mail app.",
+    is: "Skoðun er bókuð hjá Hreiðari Levý, löggiltum fasteignasala. Hringdu, sendu póst, eða sendu fyrirspurn í gegnum söluskrána — allt kemur á sama stað.",
+    en: "Viewings are booked with Hreiðar Levý, licensed estate agent. Call, write, or send an enquiry through the listing — all three reach the same place.",
   } as L,
 
   map: {
@@ -400,6 +400,14 @@ export const property = {
   official: {
     href: "https://betristofan.is/soluskra/eign/914330",
     label: { is: "Söluskrá Betri Stofan", en: "Listing at Betri Stofan" } as L,
+    enquireLabel: {
+      is: "Fyrirspurn hjá Betri Stofan",
+      en: "Enquire via Betri Stofan",
+    } as L,
+    enquireNote: {
+      is: "Opnast á söluskrá Betri Stofan, þar sem fyrirspurnin fer beint til fasteignasalans.",
+      en: "Opens the Betri Stofan listing, where the enquiry goes straight to the agent.",
+    } as L,
     note: {
       is: "Þessi síða er sett upp af eigendum til að sýna eignina. Eignin er í sölu hjá Betri Stofan fasteignasölu, þar sem söluyfirlit og formleg söluskrá eru.",
       en: "This page was put together by the owners to show the house. The sale itself is handled by Betri Stofan fasteignasala, where the formal listing and the sales prospectus are.",

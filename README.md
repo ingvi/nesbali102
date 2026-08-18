@@ -64,15 +64,21 @@ almost every property photograph is.
 `floorPlans` in `content/property.ts` is empty, so the section and its shortcut
 render nothing. Add drawings to the array and both reappear on their own.
 
-### The enquiry form
+### Getting in touch
 
-It has no backend on purpose. Submitting opens the visitor's own mail client
-with everything filled in and addressed to `contact.email`. Nothing is stored,
-nothing needs a database, and there is no privacy policy to write.
+There is no form, on purpose. The enquiry section offers the agent's phone as a
+tap-to-call, his email, and a button through to the agency listing where the
+real enquiry form lives.
 
-If you would rather collect enquiries somewhere, replace the `onSubmit` handler
-in [components/Enquiry.tsx](components/Enquiry.tsx) with a `fetch` to an API
-route.
+An earlier version had a form that built a `mailto:` link. Two problems killed
+it. It could not tell whether the handoff to the visitor's mail app had
+succeeded, so it reported success either way — on a desktop using webmail with
+no registered mail handler, the click did nothing and the page said it had
+worked. And an enquiry arriving as a plain email sits outside whatever process
+the agency uses to follow leads up, so it competed with the channel that works.
+
+If you do want enquiries coming to you rather than to the agent, that needs a
+real backend — a Vercel function and something like Resend — not `mailto:`.
 
 ### Before you publish
 

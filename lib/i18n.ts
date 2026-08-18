@@ -44,16 +44,10 @@ export const ui = {
     mapOfArea: "Kort af svæðinu",
     openInMaps: "Opna í kortum",
 
-    formName: "Nafn",
     formPhone: "Sími",
     formEmail: "Netfang",
-    formMessage: "Skilaboð",
-    formMessagePlaceholder: "Er eitthvað sem þig langar að vita fyrir skoðun?",
-    formViewing: "Ég vil bóka skoðun",
-    formSend: "Senda",
     formAddress: "Heimilisfang",
-    formSent:
-      "Póstforritið þitt ætti að hafa opnast með skilaboðunum tilbúnum. Ef ekkert gerðist, sendu þá póst beint á",
+    agent: "Fasteignasali",
 
     lightboxClose: "Loka",
     lightboxPrev: "Fyrri",
@@ -82,16 +76,10 @@ export const ui = {
     mapOfArea: "Map of the area",
     openInMaps: "Open in maps",
 
-    formName: "Name",
     formPhone: "Phone",
     formEmail: "Email",
-    formMessage: "Message",
-    formMessagePlaceholder: "Anything you would like to know before a viewing?",
-    formViewing: "I would like to book a viewing",
-    formSend: "Send",
     formAddress: "Address",
-    formSent:
-      "Your mail app should have opened with the message ready to send. If nothing happened, write directly to",
+    agent: "Estate agent",
 
     lightboxClose: "Close",
     lightboxPrev: "Prev",
