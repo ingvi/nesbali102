@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Analytics, track } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import type { Lang } from "@/lib/i18n";
 
 /**
@@ -50,7 +50,14 @@ export function Insights({ lang }: { lang: Lang }) {
   return (
     <>
       <Analytics />
-      <SpeedInsights />
+      {/*
+        The /react entry, not /next. The Next one derives its route from
+        useParams and useSearchParams behind a Suspense boundary, which never
+        resolves on these statically prerendered pages — its `route` stayed null
+        and the script was never injected. This one reports the pathname, which
+        for a two-page site is the same information.
+      */}
+      <SpeedInsights route={`/${lang}`} />
     </>
   );
 }
