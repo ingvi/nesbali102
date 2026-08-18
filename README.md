@@ -127,6 +127,39 @@ address finds it, and anything that does crawl the page can read the facts
 without guessing. A custom domain and a link from the agency listing would
 matter more than anything left in the code.
 
+## Tracking visits
+
+Vercel Web Analytics, wired up in [components/Insights.tsx](components/Insights.tsx).
+Chosen over Google Analytics on purpose: it sets no cookies and stores no client
+identifier, so the page needs no consent banner.
+
+**It has to be switched on in the dashboard once** — the script is in the page
+but the endpoint discards data until then:
+
+- Analytics: <https://vercel.com/ingvi2s-projects/nesbali102/analytics>
+- Speed Insights: <https://vercel.com/ingvi2s-projects/nesbali102/speed-insights>
+
+Pageviews arrive on their own, split by `/is` and `/en`. On top of those, five
+custom events record the things worth knowing when you are selling a house —
+not how many people looked, but how many reached for the phone:
+
+| Event | Fires on |
+| --- | --- |
+| `call` | any `tel:` link |
+| `email` | any `mailto:` link |
+| `agency-listing` | any link to betristofan.is |
+| `map` | Open in maps, or the embedded map |
+| `registry` | the HMS property register link |
+
+Each carries the language as a property. The listener is delegated from the
+document rather than attached per link, so a phone number added later is counted
+without anyone remembering to instrument it. Order matters in that handler:
+`mailto:hreidar@betristofan.is` contains `betristofan.is`, so the `mailto:` test
+has to come first or emails would be counted as listing click-throughs.
+
+Custom events may need a paid plan; pageviews do not. If the events never
+appear, that is the reason, and the pageview split is still the useful number.
+
 ## Deploying
 
 ```bash

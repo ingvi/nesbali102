@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Inter, Newsreader } from "next/font/google";
 import { Providers } from "../providers";
 import { LangProvider } from "@/components/LangContext";
+import { Insights } from "@/components/Insights";
 import { property } from "@/content/property";
 import { DEFAULT_LANG, LANGS, isLang, type Lang } from "@/lib/i18n";
 import "../globals.css";
@@ -87,7 +88,10 @@ export default async function RootLayout({
     <html lang={lang} className={`${sans.variable} ${serif.variable}`}>
       <body>
         <Providers>
-          <LangProvider lang={lang as Lang}>{children}</LangProvider>
+          <LangProvider lang={lang as Lang}>
+            {children}
+            <Insights lang={lang as Lang} />
+          </LangProvider>
         </Providers>
       </body>
     </html>
