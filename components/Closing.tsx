@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
@@ -55,10 +56,13 @@ const Media = styled("div", {
   [layout.lg]: { display: "block", height: "100%", paddingTop: "24px", paddingBottom: "24px" },
 });
 
-const Photo = styled("img", {
+const PhotoFrame = styled("div", {
+  position: "relative",
   width: "100%",
   height: "100%",
-  objectFit: "cover",
+  minHeight: "320px",
+  overflow: "hidden",
+  backgroundColor: palette.sand,
 });
 
 const Footer = styled("footer", {
@@ -98,11 +102,15 @@ export function Closing() {
             </Cell>
             <Cell $span={12} $spanLg={5} $startLg={8}>
               <Media>
-                <Photo
-                  src={property.closing.image.src}
-                  alt={x(property.closing.image.alt)}
-                  loading="lazy"
-                />
+                <PhotoFrame>
+                  <Image
+                    src={property.closing.image.src}
+                    alt={x(property.closing.image.alt)}
+                    fill
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </PhotoFrame>
               </Media>
             </Cell>
           </Grid>

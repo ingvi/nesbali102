@@ -167,49 +167,134 @@ const registration: readonly Fact[] = [
   },
 ];
 
+/**
+ * The photographs, in the order you would walk the house: arrive, sit down,
+ * cook, eat, go up, sleep, then step outside and lift off. The `width` values
+ * alternate to give the scroll its rhythm — see the note in the README.
+ *
+ * All sixteen are 2000×1334; next/image resizes and re-encodes per device.
+ */
 const gallery: GalleryImage[] = [
   {
-    src: "/images/01.svg",
-    alt: { is: "Eldhús og borðstofa", en: "Kitchen and dining area" },
-    width: "full",
-  },
-  { src: "/images/02.svg", alt: { is: "Stofa", en: "Living room" }, width: "half" },
-  {
-    src: "/images/03.svg",
-    alt: { is: "Forstofa og stigi", en: "Hallway and stair" },
+    src: "/images/01-entrance.jpg",
+    alt: {
+      is: "Forstofa með rauðum útihurðum og stiga upp á hæðina",
+      en: "Entrance hall with the red front doors and the stair up",
+    },
     width: "full",
   },
   {
-    src: "/images/04.svg",
-    alt: { is: "Hjónaherbergi", en: "Principal bedroom" },
+    src: "/images/02-living-sofa.jpg",
+    alt: {
+      is: "Stofa með djúpum sófa og stórum plöntum undir hallandi timburþaki",
+      en: "Living room with a deep sofa and tall plants under the pitched timber ceiling",
+    },
+    width: "half",
+  },
+  {
+    src: "/images/03-living-fireplace.jpg",
+    alt: {
+      is: "Stofan frá arninum",
+      en: "The living room seen from the fireplace",
+    },
+    width: "full",
+  },
+  {
+    src: "/images/04-kitchen.jpg",
+    alt: {
+      is: "Eldhúsið og útsýnið inn í borðstofuna",
+      en: "The kitchen, looking through to the dining room",
+    },
     width: "inset",
   },
-  { src: "/images/05.svg", alt: { is: "Baðherbergi", en: "Bathroom" }, width: "half" },
   {
-    src: "/images/06.svg",
-    alt: { is: "Verönd og garður", en: "Deck and garden" },
+    src: "/images/05-kitchen-range.jpg",
+    alt: {
+      is: "Eldavélin og viðarborðplatan við gluggann",
+      en: "The range and the wooden worktop by the window",
+    },
+    width: "half",
+  },
+  {
+    src: "/images/06-dining.jpg",
+    alt: {
+      is: "Borðstofan með pappírsljósunum",
+      en: "The dining room under the paper pendants",
+    },
     width: "full",
   },
-  { src: "/images/07.svg", alt: { is: "Svefnherbergi", en: "Bedroom" }, width: "inset" },
   {
-    src: "/images/08.svg",
-    alt: { is: "Húsið frá götu", en: "The house from the street" },
+    src: "/images/07-landing.jpg",
+    alt: {
+      is: "Efri hæðin opnast yfir borðstofuna",
+      en: "The upper floor opening over the dining room",
+    },
+    width: "inset",
+  },
+  {
+    src: "/images/08-bedroom-principal.jpg",
+    alt: {
+      is: "Hjónaherbergið undir súðinni",
+      en: "The principal bedroom under the eaves",
+    },
+    width: "full",
+  },
+  {
+    src: "/images/09-bathroom.jpg",
+    alt: {
+      is: "Baðherbergið með terrazzo-flísum og fíkustré",
+      en: "The bathroom, terrazzo floor and a fig tree",
+    },
+    width: "half",
+  },
+  {
+    src: "/images/10-bedroom.jpg",
+    alt: {
+      is: "Svefnherbergi með glugga út í garðinn",
+      en: "A bedroom looking out over the garden",
+    },
+    width: "inset",
+  },
+  {
+    src: "/images/11-balcony.jpg",
+    alt: {
+      is: "Svalirnar og útsýnið yfir hverfið",
+      en: "The balcony and the view over the neighbourhood",
+    },
+    width: "full",
+  },
+  {
+    src: "/images/12-garden.jpg",
+    alt: {
+      is: "Verönd og garður með hengirúmi",
+      en: "The deck and garden, with a hammock",
+    },
+    width: "full",
+  },
+  {
+    src: "/images/13-street.jpg",
+    alt: {
+      is: "Húsið frá götunni",
+      en: "The house from the street",
+    },
+    width: "half",
+  },
+  {
+    src: "/images/14-aerial.jpg",
+    alt: {
+      is: "Seltjarnarnes úr lofti, með Esjuna í fjarska",
+      en: "Seltjarnarnes from the air, with Esja beyond",
+    },
     width: "full",
   },
 ];
 
-const floorPlans: readonly FloorPlan[] = [
-  {
-    src: "/images/plan-ground.svg",
-    alt: { is: "Grunnmynd, neðri hæð", en: "Ground floor plan" },
-    label: { is: "Neðri hæð", en: "Ground floor" },
-  },
-  {
-    src: "/images/plan-upper.svg",
-    alt: { is: "Grunnmynd, efri hæð", en: "Upper floor plan" },
-    label: { is: "Efri hæð", en: "Upper floor" },
-  },
-];
+/**
+ * TODO — no drawings were supplied with the photographs. Add them here and the
+ * section reappears on its own; while this is empty it renders nothing, and the
+ * shortcut to it is hidden.
+ */
+const floorPlans: readonly FloorPlan[] = [];
 
 export const property = {
   registry,
@@ -239,10 +324,10 @@ export const property = {
   },
 
   hero: {
-    src: "/images/hero.svg",
+    src: "/images/hero.jpg",
     alt: {
-      is: "Stofan á Nesbala 102 í síðdegisbirtu",
-      en: "The living room at Nesbali 102 in afternoon light",
+      is: "Borðstofan á Nesbala 102, stiginn og garðurinn fyrir utan",
+      en: "The dining room at Nesbali 102, the stair, and the garden beyond",
     } as L,
   },
 
@@ -296,8 +381,11 @@ export const property = {
       href: "#enquiry",
     },
     image: {
-      src: "/images/closing.svg",
-      alt: { is: "Kvöldbirta við ströndina", en: "Evening light on the shore" } as L,
+      src: "/images/closing.jpg",
+      alt: {
+        is: "Ströndin við Seltjarnarnes úr lofti",
+        en: "The Seltjarnarnes shoreline from the air",
+      } as L,
     },
   },
 };

@@ -40,22 +40,29 @@ the asking price, room counts, the description, and the contact details.
 
 ### Photographs
 
-The images that ship with the repo are generated placeholders so the layout
-reads correctly before the real shoot. Replace them one for one in
-`public/images/` — keep the file names and everything picks up automatically, or
-change the paths in `content/property.ts`.
+Sixteen photographs live in `public/images/`, stored as 2000px-wide JPEGs and
+served through `next/image`, which resizes and re-encodes them per device — a
+phone gets a ~750px WebP, not the 2000px master. Keep that convention when
+swapping any of them: one file, 2000px on the long edge, 3:2.
 
 Two things to get right, because the layout leans on them:
 
-- **The hero** wants a wide landscape frame (3:2 or wider). It is cropped to
-  fill, so leave room around the subject.
+- **The hero** is cropped to fill a frame roughly 2:1, so the top and bottom of
+  the frame are lost. Leave room around the subject.
 - **Gallery images** carry a `width` of `"full"`, `"half"` or `"inset"`. Alternating
   them is what gives the scroll its rhythm — `"half"` sits against the right edge.
 
 There is no lightbox, by design: the scrolling stack *is* the gallery, and
 "See images" simply scrolls to it. That is how the reference behaves.
 
-Once the real photographs are in, delete `scripts/make-placeholders.mjs`.
+The header sits as dark ink over a light wash at the top of the hero rather than
+white over a dark one, so it stays legible on a bright interior — which is what
+almost every property photograph is.
+
+### Floor plans
+
+`floorPlans` in `content/property.ts` is empty, so the section and its shortcut
+render nothing. Add drawings to the array and both reappear on their own.
 
 ### The enquiry form
 
@@ -69,9 +76,11 @@ route.
 
 ### Before you publish
 
-- [ ] Real photographs in `public/images/`
+- [x] Real photographs in `public/images/`
 - [ ] Every `TODO` in `content/property.ts` replaced — asking price, room counts,
       description, highlights, your phone number and email
+- [ ] Floor plans added, or left out on purpose
+- [ ] The map marker moved to the real coordinates
 - [ ] Both languages read naturally, not as translations of each other
 - [ ] `meta.siteUrl` set to the deployed domain, so link previews resolve
 

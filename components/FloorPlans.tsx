@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
@@ -11,11 +12,7 @@ const PlanFigure = styled("figure", {
   margin: 0,
 });
 
-const PlanImage = styled("img", {
-  width: "100%",
-  height: "auto",
-  backgroundColor: palette.white,
-});
+
 
 const PlanCaption = styled("figcaption", {
   ...type.label,
@@ -44,7 +41,19 @@ export function FloorPlans() {
               <Stack>
                 {plans.map((plan) => (
                   <PlanFigure key={plan.src}>
-                    <PlanImage src={plan.src} alt={x(plan.alt)} loading="lazy" />
+                    <Image
+                      src={plan.src}
+                      alt={x(plan.alt)}
+                      width={2000}
+                      height={1334}
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                        backgroundColor: palette.white,
+                      }}
+                    />
                     <PlanCaption>{x(plan.label)}</PlanCaption>
                   </PlanFigure>
                 ))}

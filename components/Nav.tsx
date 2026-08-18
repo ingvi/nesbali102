@@ -20,7 +20,7 @@ const Bar = styled<"header", { $solid: boolean }>("header", ({ $solid }) => ({
   paddingLeft: layout.gutter,
   paddingRight: layout.gutter,
   height: "56px",
-  color: $solid ? palette.ink : palette.white,
+  color: palette.ink,
   backgroundColor: $solid ? palette.chalk : "transparent",
   borderBottom: `1px solid ${$solid ? palette.rule : "transparent"}`,
   transitionProperty: "background-color, color, border-color",

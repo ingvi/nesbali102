@@ -245,7 +245,9 @@ export function Intro() {
               <BlockBody>
                 <Shortcuts>
                   <TextLink href="#location">{t("mapOfArea")}</TextLink>
-                  <TextLink href="#floor-plans">{t("floorPlans")}</TextLink>
+                  {property.floorPlans.length > 0 ? (
+                    <TextLink href="#floor-plans">{t("floorPlans")}</TextLink>
+                  ) : null}
                   <TextLink href="#enquiry">{t("propertyEnquiry")}</TextLink>
                 </Shortcuts>
               </BlockBody>

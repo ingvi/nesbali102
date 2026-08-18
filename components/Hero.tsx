@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property } from "@/content/property";
@@ -17,19 +18,19 @@ const HeroFrame = styled("div", {
   [layout.lg]: { height: "calc(100dvh - 90px)" },
 });
 
-const HeroImage = styled("img", {
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  objectPosition: "center",
-});
 
-/** A short scrim so the white nav stays legible on a bright photo. */
+
+/**
+ * Interior photography is nearly always bright, so the header is dark ink over
+ * the image as it is on the reference. This washes the top of the photo toward
+ * the page colour to guarantee the chrome reads, whatever the hero turns out
+ * to be — a dark scrim with white text fails the moment the ceiling is white.
+ */
 const Scrim = styled("div", {
   position: "absolute",
   inset: "0 0 auto 0",
-  height: "140px",
-  background: "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0))",
+  height: "132px",
+  background: `linear-gradient(to bottom, ${palette.chalk} 0%, rgba(241, 240, 234, 0.62) 42%, rgba(241, 240, 234, 0) 100%)`,
   pointerEvents: "none",
 });
 
@@ -106,7 +107,15 @@ export function Hero() {
   return (
     <div id="top">
       <HeroFrame>
-        <HeroImage src={property.hero.src} alt={x(property.hero.alt)} />
+        <Image
+          src={property.hero.src}
+          alt={x(property.hero.alt)}
+          fill
+          // The one image worth blocking the first paint for.
+          priority
+          sizes="100vw"
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
         <Scrim />
       </HeroFrame>
 
