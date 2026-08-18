@@ -65,88 +65,39 @@ const PhotoFrame = styled("div", {
   backgroundColor: palette.sand,
 });
 
-/**
- * The page is the owners' own, so it says so — and points at the agency listing
- * rather than leaving a visitor to assume this is it.
- */
-const Note = styled("p", {
-  margin: 0,
-  maxWidth: "62ch",
-  color: palette.inkMuted,
-  // The footer sets everything uppercase; this is a sentence, so it opts out.
-  textTransform: "none",
-  letterSpacing: "-0.24px",
-  fontSize: type.size.small,
-  lineHeight: 1.4,
-});
-
-const FooterLink = styled("a", {
-  color: "inherit",
-  textDecoration: "underline",
-  textUnderlineOffset: "2px",
-});
-
-const Footer = styled("footer", {
-  backgroundColor: palette.sand,
-  paddingLeft: layout.gutter,
-  paddingRight: layout.gutter,
-  paddingTop: "24px",
-  paddingBottom: "32px",
-  borderTop: `1px solid ${palette.rule}`,
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "12px",
-  justifyContent: "space-between",
-  ...type.eyebrow,
-  color: palette.inkMuted,
-  [layout.lg]: { paddingLeft: layout.gutterLg, paddingRight: layout.gutterLg },
-});
-
 export function Closing() {
   const { x } = useLang();
 
   return (
-    <>
-      <Panel>
-        <Inner>
-          <Grid>
-            <Cell $span={12} $spanLg={5} $startLg={2}>
-              <Column>
-                <Heading>{x(property.closing.heading)}</Heading>
-                <div>
-                  <Body>{x(property.closing.body)}</Body>
-                  <OutlineAction href={property.closing.cta.href}>
-                    {x(property.closing.cta.label)}
-                  </OutlineAction>
-                </div>
-              </Column>
-            </Cell>
-            <Cell $span={12} $spanLg={5} $startLg={8}>
-              <Media>
-                <PhotoFrame>
-                  <Image
-                    src={property.closing.image.src}
-                    alt={x(property.closing.image.alt)}
-                    fill
-                    sizes="(min-width: 1024px) 45vw, 100vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                </PhotoFrame>
-              </Media>
-            </Cell>
-          </Grid>
-        </Inner>
-      </Panel>
-
-      <Footer>
-        <span>{x(property.contact.address)}</span>
-        <Note>
-          {x(property.official.note)}{" "}
-          <FooterLink href={property.official.href} target="_blank" rel="noreferrer">
-            {x(property.official.label)}
-          </FooterLink>
-        </Note>
-      </Footer>
-    </>
+    <Panel>
+      <Inner>
+        <Grid>
+          <Cell $span={12} $spanLg={5} $startLg={2}>
+            <Column>
+              <Heading>{x(property.closing.heading)}</Heading>
+              <div>
+                <Body>{x(property.closing.body)}</Body>
+                <OutlineAction href={property.closing.cta.href}>
+                  {x(property.closing.cta.label)}
+                </OutlineAction>
+              </div>
+            </Column>
+          </Cell>
+          <Cell $span={12} $spanLg={5} $startLg={8}>
+            <Media>
+              <PhotoFrame>
+                <Image
+                  src={property.closing.image.src}
+                  alt={x(property.closing.image.alt)}
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  style={{ objectFit: "cover" }}
+                />
+              </PhotoFrame>
+            </Media>
+          </Cell>
+        </Grid>
+      </Inner>
+    </Panel>
   );
 }
