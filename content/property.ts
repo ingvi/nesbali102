@@ -380,12 +380,14 @@ export const property = {
     } as L,
     href: "https://www.google.com/maps/search/?api=1&query=Nesbali+102,+170+Seltjarnarnes,+Iceland",
     /**
-     * TODO — the marker is placed from the street's rough position, not from a
-     * surveyed point. Drop a pin on openstreetmap.org, copy the lat/lon out of
-     * the URL, and replace both the bbox centre and the marker below.
+     * The building itself, from OpenStreetMap way 198812068 — which records
+     * Nesbali 102 as a terrace, agreeing with the agency listing rather than
+     * with the register's "íbúð á hæð". OpenStreetMap widens the box to fit the
+     * frame, so this is deliberately tighter than the view you get — about 900 m
+     * across, which lands close enough to read the street names.
      */
     embedSrc:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-22.0330%2C64.1520%2C-22.0090%2C64.1630&layer=mapnik&marker=64.1571%2C-22.0212",
+      "https://www.openstreetmap.org/export/embed.html?bbox=-22.0157%2C64.1522%2C-21.9977%2C64.1580&layer=mapnik&marker=64.15508%2C-22.00667",
     registryHref: "https://hms.is/fasteignaskra/117492/1024775/2068040",
     registryLabel: { is: "Fasteignaskrá HMS", en: "HMS property register" } as L,
   },

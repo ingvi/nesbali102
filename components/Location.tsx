@@ -20,8 +20,6 @@ const MapEmbed = styled("iframe", {
   width: "100%",
   height: "100%",
   border: "none",
-  // The map is a background element; the link below is the real affordance.
-  filter: "grayscale(1) contrast(0.95)",
 });
 
 const Meta = styled("div", {
