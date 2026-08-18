@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!--
+    Built for 16px, where detail is lost and only contrast survives: a full-bleed
+    acid field with a black dot punched out of it. Most favicons in a tab strip
+    are a pale logo on white, so a saturated edge-to-edge colour is what makes
+    this one findable at a glance.
+  -->
+  <rect width="32" height="32" rx="7" fill="#CCFF00"/>
+  <circle cx="16" cy="16" r="7.5" fill="#0A0A0A"/>
+</svg>

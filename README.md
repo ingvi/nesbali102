@@ -90,6 +90,43 @@ real backend — a Vercel function and something like Resend — not `mailto:`.
 - [ ] Both languages read naturally, not as translations of each other
 - [ ] `meta.siteUrl` set to the deployed domain, so link previews resolve
 
+## Being found, and looking right when shared
+
+| What | Where |
+| --- | --- |
+| Titles, descriptions, share image | `meta` in [content/property.ts](content/property.ts) |
+| Open Graph, Twitter card, hreflang | [app/[lang]/layout.tsx](app/[lang]/layout.tsx) |
+| Schema.org JSON-LD | [components/StructuredData.tsx](components/StructuredData.tsx) |
+| Crawler rules | [app/robots.ts](app/robots.ts) |
+| Sitemap | [app/sitemap.ts](app/sitemap.ts) |
+| Favicon | `app/[lang]/icon.svg`, `app/[lang]/apple-icon.png` |
+
+`public/images/og.jpg` is a 1200×630 crop of the hero — the size Facebook,
+LinkedIn, Slack, iMessage and X all crop to. Regenerate it from a new hero with:
+
+```bash
+sips -Z 1200 public/images/hero.jpg --out /tmp/w.jpg && sips -c 630 1200 --cropOffset 55 0 /tmp/w.jpg --out public/images/og.jpg
+```
+
+The JSON-LD carries the price, size and room counts as plain numbers, because
+`208.500.000 kr.` is not a parseable price. Those numbers live beside the
+display strings in `content/property.ts` as `priceValue`, `sizeValue` and so on
+— change one and change the other.
+
+`robots.ts` allows assistant crawlers (GPTBot, ClaudeBot, PerplexityBot,
+Google-Extended) explicitly rather than by omission, so the decision is on the
+record. Move one into `disallow` to reverse it.
+
+### What this cannot do
+
+A new page on a `vercel.app` subdomain with no inbound links will not rank for
+"raðhús til sölu Seltjarnarnes" — the portals and the agency own those queries,
+and a house sells faster than a domain earns authority. What the work above
+does buy: the link looks right everywhere it is pasted, anyone searching the
+address finds it, and anything that does crawl the page can read the facts
+without guessing. A custom domain and a link from the agency listing would
+matter more than anything left in the code.
+
 ## Deploying
 
 ```bash

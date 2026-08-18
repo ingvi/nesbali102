@@ -4,7 +4,7 @@ import { Inter, Newsreader } from "next/font/google";
 import { Providers } from "../providers";
 import { LangProvider } from "@/components/LangContext";
 import { property } from "@/content/property";
-import { LANGS, isLang, type Lang } from "@/lib/i18n";
+import { DEFAULT_LANG, LANGS, isLang, type Lang } from "@/lib/i18n";
 import "../globals.css";
 
 const sans = Inter({
@@ -33,6 +33,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { lang } = await params;
   if (!isLang(lang)) return {};
 
+  const share = {
+    url: property.meta.shareImage,
+    width: 1200,
+    height: 630,
+    alt: property.meta.shareImageAlt[lang],
+  };
+
   return {
     metadataBase: new URL(property.meta.siteUrl),
     title: property.meta.title[lang],
@@ -40,15 +47,32 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     alternates: {
       canonical: `/${lang}`,
       // Both listings describe the same property, so each points at the other.
-      languages: Object.fromEntries(LANGS.map((code) => [code, `/${code}`])),
+      // x-default tells Google which to serve when it cannot tell the language
+      // a searcher wants — Icelandic, since the house is in Iceland.
+      languages: {
+        ...Object.fromEntries(LANGS.map((code) => [code, `/${code}`])),
+        "x-default": `/${DEFAULT_LANG}`,
+      },
     },
     openGraph: {
       title: property.meta.title[lang],
       description: property.meta.description[lang],
+      url: `/${lang}`,
+      siteName: property.name,
       locale: lang === "is" ? "is_IS" : "en_GB",
+      alternateLocale: lang === "is" ? ["en_GB"] : ["is_IS"],
       type: "website",
-      images: [property.hero.src],
+      images: [share],
     },
+    twitter: {
+      // Without this the link renders as a thumbnail beside text rather than
+      // the full-width photograph.
+      card: "summary_large_image",
+      title: property.meta.title[lang],
+      description: property.meta.description[lang],
+      images: [share],
+    },
+    robots: { index: true, follow: true },
   };
 }
 

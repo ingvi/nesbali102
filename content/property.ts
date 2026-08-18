@@ -49,7 +49,17 @@ const registry = {
   plotSize: "5.600 m²",
 };
 
-/** ✓ BS — what the property actually is, and what is being asked for it. */
+/**
+ * The coordinates of the building, from OpenStreetMap way 198812068. Used by
+ * both the map embed and the structured data.
+ */
+const geo = { latitude: 64.15508, longitude: -22.00667 };
+
+/**
+ * ✓ BS — what the property actually is, and what is being asked for it.
+ * The `*Value` fields are the same figures as plain numbers, for the structured
+ * data: search engines and answer engines cannot read "208.500.000 kr.".
+ */
 const listing = {
   askingPrice: { is: "208.500.000 kr.", en: "208,500,000 kr." } as L,
   type: { is: "Raðhús á pöllum", en: "Split-level terraced house" } as L,
@@ -59,6 +69,14 @@ const listing = {
   livingRooms: "2",
   garage: { is: "Innbyggður, 20,5 m²", en: "Built in, 20.5 m²" } as L,
   entrance: { is: "Sér", en: "Private" } as L,
+
+  priceValue: 208_500_000,
+  priceCurrency: "ISK",
+  sizeValue: 279,
+  roomsValue: 7,
+  bedroomsValue: 5,
+  bathroomsValue: 2,
+  builtYearValue: 1982,
 };
 
 /** The four lines beside the title. */
@@ -315,6 +333,7 @@ const floorPlans: readonly FloorPlan[] = [];
 export const property = {
   registry,
   listing,
+  geo,
   keyFacts,
   lead,
   description,
@@ -329,14 +348,20 @@ export const property = {
 
   meta: {
     title: {
-      is: "Nesbali 102, Seltjarnarnes — 279 m², 5 svefnherbergi | Til sölu",
-      en: "Nesbali 102, Seltjarnarnes — 279 m², 5 bedrooms | For sale",
+      is: "Nesbali 102, Seltjarnarnes — raðhús til sölu, 279 m²",
+      en: "Nesbali 102, Seltjarnarnes — house for sale, 279 m²",
     } as L,
     description: {
       is: "Mikið endurnýjað 279 m² raðhús á pöllum með innbyggðum bílskúr, vestast á Seltjarnarnesi. Fimm svefnherbergi, tvær stofur, afgirtur suðurgarður.",
       en: "An extensively renovated 279 m² split-level terraced house with a built-in garage at the western end of Seltjarnarnes. Five bedrooms, two living rooms, a fenced south-facing garden.",
     } as L,
     siteUrl: "https://nesbali102.vercel.app",
+    /** 1200×630, the size Facebook, LinkedIn, Slack, iMessage and X all crop to. */
+    shareImage: "/images/og.jpg",
+    shareImageAlt: {
+      is: "Borðstofan á Nesbala 102",
+      en: "The dining room at Nesbali 102",
+    } as L,
   },
 
   hero: {
@@ -386,8 +411,7 @@ export const property = {
      * frame, so this is deliberately tighter than the view you get — about 900 m
      * across, which lands close enough to read the street names.
      */
-    embedSrc:
-      "https://www.openstreetmap.org/export/embed.html?bbox=-22.0157%2C64.1522%2C-21.9977%2C64.1580&layer=mapnik&marker=64.15508%2C-22.00667",
+    embedSrc: `https://www.openstreetmap.org/export/embed.html?bbox=-22.0157%2C64.1522%2C-21.9977%2C64.1580&layer=mapnik&marker=${geo.latitude}%2C${geo.longitude}`,
     registryHref: "https://hms.is/fasteignaskra/117492/1024775/2068040",
     registryLabel: { is: "Fasteignaskrá HMS", en: "HMS property register" } as L,
   },
