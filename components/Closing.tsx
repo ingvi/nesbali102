@@ -65,6 +65,27 @@ const PhotoFrame = styled("div", {
   backgroundColor: palette.sand,
 });
 
+/**
+ * The page is the owners' own, so it says so — and points at the agency listing
+ * rather than leaving a visitor to assume this is it.
+ */
+const Note = styled("p", {
+  margin: 0,
+  maxWidth: "62ch",
+  color: palette.inkMuted,
+  // The footer sets everything uppercase; this is a sentence, so it opts out.
+  textTransform: "none",
+  letterSpacing: "-0.24px",
+  fontSize: type.size.small,
+  lineHeight: 1.4,
+});
+
+const FooterLink = styled("a", {
+  color: "inherit",
+  textDecoration: "underline",
+  textUnderlineOffset: "2px",
+});
+
 const Footer = styled("footer", {
   backgroundColor: palette.sand,
   paddingLeft: layout.gutter,
@@ -119,7 +140,12 @@ export function Closing() {
 
       <Footer>
         <span>{x(property.contact.address)}</span>
-        <span>{x(property.contact.role)}</span>
+        <Note>
+          {x(property.official.note)}{" "}
+          <FooterLink href={property.official.href} target="_blank" rel="noreferrer">
+            {x(property.official.label)}
+          </FooterLink>
+        </Note>
       </Footer>
     </>
   );

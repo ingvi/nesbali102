@@ -107,14 +107,21 @@ export const Rule = styled<"hr", { $strong?: boolean }>("hr", ({ $strong }) => (
   width: "100%",
 }));
 
-/** The bordered pill used for "See images", "Property enquiry" and so on. */
+/**
+ * The bordered pill used for "See images", "Property enquiry" and so on.
+ * Metrics measured off the reference: 12px uppercase on 0.32px of tracking,
+ * 8px/16px of padding, giving a 34px-tall control. It is a small, tight button
+ * by design — the page's emphasis lives in the photographs, not the chrome.
+ */
 const outlineStyle = ({ $block }: { $block?: boolean }) => ({
   ...type.eyebrow,
+  fontSize: "12px",
+  letterSpacing: "0.32px",
   display: $block ? "flex" : "inline-flex",
   width: $block ? "100%" : "auto",
   alignItems: "center",
   justifyContent: "center",
-  padding: "14px 22px",
+  padding: "8px 16px",
   border: `1px solid ${palette.ruleStrong}`,
   backgroundColor: "transparent",
   color: palette.ink,

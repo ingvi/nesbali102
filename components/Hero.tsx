@@ -20,20 +20,6 @@ const HeroFrame = styled("div", {
 
 
 
-/**
- * Interior photography is nearly always bright, so the header is dark ink over
- * the image as it is on the reference. This washes the top of the photo toward
- * the page colour to guarantee the chrome reads, whatever the hero turns out
- * to be — a dark scrim with white text fails the moment the ceiling is white.
- */
-const Scrim = styled("div", {
-  position: "absolute",
-  inset: "0 0 auto 0",
-  height: "132px",
-  background: `linear-gradient(to bottom, ${palette.chalk} 0%, rgba(241, 240, 234, 0.62) 42%, rgba(241, 240, 234, 0) 100%)`,
-  pointerEvents: "none",
-});
-
 const TitleBar = styled("div", {
   display: "flex",
   flexDirection: "column",
@@ -116,7 +102,6 @@ export function Hero() {
           sizes="100vw"
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
-        <Scrim />
       </HeroFrame>
 
       <TitleBar>

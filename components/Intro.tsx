@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { styled } from "baseui";
 import { layout, palette, type } from "@/app/theme";
 import { property, type Fact } from "@/content/property";
@@ -48,6 +49,16 @@ const Contact = styled("div", {
   [layout.lg]: { marginBottom: 0 },
 });
 
+/** A small portrait, as every listing portal carries for its agent. */
+const Portrait = styled("div", {
+  position: "relative",
+  width: "72px",
+  height: "88px",
+  overflow: "hidden",
+  backgroundColor: palette.sand,
+  marginBottom: "16px",
+});
+
 const Role = styled("p", {
   ...type.label,
   color: palette.inkMuted,
@@ -59,6 +70,13 @@ const ContactLine = styled("p", {
   fontSize: type.size.small,
   lineHeight: 1.5,
   margin: 0,
+});
+
+const OfficialLink = styled("p", {
+  fontFamily: type.sans,
+  fontSize: type.size.small,
+  lineHeight: 1.4,
+  margin: "14px 0 0 0",
 });
 
 const ButtonSpacer = styled("div", {
@@ -173,6 +191,15 @@ export function Intro() {
       <Grid>
         <Cell $span={12} $spanLg={4} $startLg={2} $orderLg={0}>
           <Contact>
+            <Portrait>
+              <Image
+                src={property.contact.photo}
+                alt={x(property.contact.photoAlt)}
+                fill
+                sizes="72px"
+                style={{ objectFit: "cover", objectPosition: "top" }}
+              />
+            </Portrait>
             <Role>{x(property.contact.role)}</Role>
             <ContactLine>{property.contact.name}</ContactLine>
             <ContactLine>
@@ -188,6 +215,11 @@ export function Intro() {
                 {t("propertyEnquiry")}
               </OutlineAction>
             </ButtonSpacer>
+            <OfficialLink>
+              <TextLink href={property.official.href} target="_blank" rel="noreferrer">
+                {x(property.official.label)}
+              </TextLink>
+            </OfficialLink>
           </Contact>
         </Cell>
 

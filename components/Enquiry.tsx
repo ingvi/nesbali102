@@ -262,9 +262,11 @@ export function Enquiry() {
                     BaseButton: {
                       style: {
                         ...type.eyebrow,
+                        fontSize: "12px",
+                        letterSpacing: "0.32px",
                         width: "100%",
-                        paddingTop: "18px",
-                        paddingBottom: "18px",
+                        paddingTop: "8px",
+                        paddingBottom: "8px",
                       },
                     },
                   }}

@@ -5,30 +5,54 @@ import { styled } from "baseui";
 import { palette } from "@/app/theme";
 import { useLang } from "./LangContext";
 
+/**
+ * Modelled on the reference's control: a 40px charcoal square tucked against
+ * the bottom edge at 12% from the right, open at the bottom so it reads as
+ * something rising out of the page rather than a floating pill. It slides down
+ * out of view rather than fading, and the chevron nudges on hover — that
+ * animation lives in globals.css, since Styletron cannot express a descendant
+ * selector like `:hover svg`.
+ */
 const Button = styled<"button", { $visible: boolean }>("button", ({ $visible }) => ({
   position: "fixed",
-  right: "16px",
-  bottom: "16px",
+  right: "12%",
+  bottom: 0,
   zIndex: 30,
-  width: "44px",
-  height: "44px",
+  width: "40px",
+  height: "40px",
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   justifyContent: "center",
-  border: `1px solid ${palette.rule}`,
-  backgroundColor: palette.chalk,
-  color: palette.ink,
+  paddingTop: "6px",
+  paddingLeft: "8px",
+  paddingRight: "8px",
+  paddingBottom: 0,
+  border: `1px solid ${palette.ink}`,
+  borderBottom: "none",
+  backgroundColor: palette.ink,
+  color: palette.white,
   cursor: "pointer",
-  opacity: $visible ? 1 : 0,
-  transform: $visible ? "translateY(0)" : "translateY(8px)",
+  transform: $visible ? "translateY(0)" : "translateY(100%)",
   pointerEvents: $visible ? "auto" : "none",
-  transitionProperty: "opacity, transform",
+  transitionProperty: "transform",
   transitionDuration: "300ms",
   transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-  "@media screen and (min-width: 1024px)": { right: "24px", bottom: "24px" },
 }));
 
-const label = { is: "Efst á síðuna", en: "Back to top" };
+/** Visually hidden, but read out — the button has no visible text. */
+const SrOnly = styled("span", {
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  borderWidth: 0,
+});
+
+const label = { is: "Efst á síðuna", en: "To top" };
 
 export function BackToTop() {
   const { x } = useLang();
@@ -43,20 +67,26 @@ export function BackToTop() {
 
   return (
     <Button
+      className="to-top"
       $visible={visible}
       type="button"
-      aria-label={x(label)}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path
-          d="M1 9L7 3L13 9"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="square"
-        />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m18 15-6-6-6 6" />
       </svg>
+      <SrOnly>{x(label)}</SrOnly>
     </Button>
   );
 }

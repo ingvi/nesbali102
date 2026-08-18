@@ -5,10 +5,15 @@ import type { L, Lang } from "@/lib/i18n";
  *  EDIT THIS FILE ONLY.
  *  Everything the visitor sees comes from here, in both Icelandic and English.
  *
- *  Values marked  ✓ HMS  come from the public property register entry F2068040
- *  (hms.is/fasteignaskra/117492/1024775/2068040) and are correct as recorded.
- *  Values marked  TODO   are placeholders that must be replaced before this is
- *  shown to a buyer — the register does not record them.
+ *  Sources, so every figure can be traced:
+ *    ✓ HMS   the public property register, entry F2068040
+ *            hms.is/fasteignaskra/117492/1024775/2068040
+ *    ✓ BS    the listing with Betri Stofan fasteignasala, entry 914330
+ *            betristofan.is/soluskra/eign/914330
+ *
+ *  The prose below is written for this page. It is not lifted from the agency
+ *  listing — only the facts are shared, and the two descriptions should stay
+ *  independent so neither reads as a copy of the other.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -25,15 +30,15 @@ export type GalleryImage = {
 export type Fact = { label: L; value: L };
 export type FloorPlan = { src: string; alt: L; label: L };
 
-/** ✓ HMS — the official register entry. These are facts, not marketing. */
+/** ✓ HMS — the official register entry. */
 const registry = {
   propertyNumber: "F2068040",
   landNumber: "L117492",
   marking: "100101",
   municipality: "Seltjarnarnesbær",
   postcode: "170",
-  /** Register classification: "Íbúð á hæð". */
-  type: { is: "Íbúð á hæð", en: "Flat on a floor" } as L,
+  /** How the register classifies the unit, which is not how it is marketed. */
+  registeredType: { is: "Íbúð á hæð", en: "Flat on a floor" } as L,
   size: "279 m²",
   builtYear: "1982",
   buildStage: "B4",
@@ -41,90 +46,98 @@ const registry = {
   assessment2026: "182.950.000 kr.",
   assessmentNextYear: "188.300.000 kr.",
   fireInsurance: "141.300.000 kr.",
-  fireInsuranceRevalued: "25.03.1988",
   plotSize: "5.600 m²",
-  plotAssessment: "510.000.000 kr.",
 };
 
-/**
- * The four lines beside the title.
- * TODO — the register holds no room counts. Fill in the first two, and the price.
- */
+/** ✓ BS — what the property actually is, and what is being asked for it. */
+const listing = {
+  askingPrice: { is: "208.500.000 kr.", en: "208,500,000 kr." } as L,
+  type: { is: "Raðhús á pöllum", en: "Split-level terraced house" } as L,
+  rooms: "7",
+  bedrooms: "5",
+  bathrooms: "2",
+  livingRooms: "2",
+  garage: { is: "Innbyggður, 20,5 m²", en: "Built in, 20.5 m²" } as L,
+  entrance: { is: "Sér", en: "Private" } as L,
+};
+
+/** The four lines beside the title. */
 const keyFacts: LList = {
-  is: ["TODO svefnherbergi", "TODO baðherbergi", registry.size, "Verð: TODO"],
-  en: ["TODO bedrooms", "TODO bathrooms", registry.size, "Price: TODO"],
+  is: ["5 svefnherbergi", "2 baðherbergi", registry.size, listing.askingPrice.is],
+  en: ["5 bedrooms", "2 bathrooms", registry.size, listing.askingPrice.en],
 };
 
-/** TODO — your own opening line. This one only states what the register holds. */
 const lead: L = {
-  is: "Rúmgóð 279 fermetra eign við Nesbala, vestast á Seltjarnarnesi — í nokkurra mínútna göngufæri frá Bakkatjörn og Gróttu.",
-  en: "A generous 279 m² home on Nesbali, at the western edge of Seltjarnarnes — a few minutes on foot from Bakkatjörn and the Grótta lighthouse.",
+  is: "Raðhús á pöllum í rólegum botnlanga vestast á Seltjarnarnesi, þar sem gatan endar og fjaran tekur við. Aukin lofthæð, stórir gluggar og arinn í neðri stofu.",
+  en: "A split-level terraced house in a quiet cul-de-sac at the western end of Seltjarnarnes, where the road stops and the shore begins. Raised ceilings, large windows, and a fireplace in the lower living room.",
 };
 
-/**
- * TODO — replace with your own description. What is written here is deliberately
- * limited to what the register confirms; nothing about the rooms, the condition
- * or any renovation has been assumed.
- */
 const description: LList = {
   is: [
-    "Nesbali liggur vestast á Seltjarnarnesi, þar sem byggðin endar og útivistarsvæðið tekur við. Gangan út á Gróttu tekur nokkrar mínútur, sundlaugin og Mýrarhúsaskóli eru í næsta nágrenni og stutt er inn í bæ.",
-    "TODO — hér skrifar þú um eignina sjálfa: herbergjaskipan, endurbætur, eldhúsið, útsýnið, hvernig birtan fer um húsið yfir daginn. Ekki endurtaka tölurnar úr töflunni hér til hliðar; skrifaðu um það sem talan segir ekki.",
+    "Húsið er á þremur pöllum. Á aðalhæð er forstofa og eitt samfellt rými þar sem eldhús, borðstofa og stofa liggja saman; þremur tröppum neðar er setustofan með arninum og útgengi í garðinn. Á efri palli eru þrjú svefnherbergi og baðherbergi, út frá opnu holi með þakglugga sem hefur verið nýtt sem vinnuaðstaða. Á neðri palli eru tvö svefnherbergi til viðbótar, snyrting, þvottahús, geymsla og rúmgott tómstundarrými — og þar er innangengt í bílskúrinn.",
+    "Eldhús og baðherbergi hafa verið endurnýjuð: gegnheil eik á borðplötum, Smeg gaseldavél, og á baðinu terrazzo-flísar, svífandi innrétting með tvöföldum vaski og walk-in sturta undir þakglugga. Rafmagn og neysluvatnslagnir hafa verið endurnýjuð í öllu húsinu, og á hellulögðu bílaplani fyrir þrjá bíla er hleðslustöð fyrir rafbíl.",
+    "Suðurgarðurinn bak við húsið er afgirtur og skjólsæll, með viðarverönd og nýlegri grasþöku. Í göngufæri eru leikskóli og grunnskóli, sundlaug Seltjarnarness, íþróttasvæði Gróttu, níu holu golfvöllur og Eiðistorg — og ströndin út á Gróttu með Faxaflóa fyrir framan.",
   ],
   en: [
-    "Nesbali runs along the western edge of Seltjarnarnes, where the houses stop and the shoreline path begins. Grótta is a few minutes' walk away, the pool and the local school are close by, and central Reykjavík is a short drive.",
-    "TODO — write about the house itself here: the layout, any renovation, the kitchen, the views, the way the light moves through it over the course of a day. Do not restate the numbers from the table alongside; write the part the numbers cannot say.",
+    "The house sits on three levels. The main floor holds the entrance and one continuous room where kitchen, dining and living space run together; three steps down is the sitting room, with the fireplace and a door out to the garden. The upper level has three bedrooms and a bathroom off an open hall with a skylight, currently used as a workspace. The lower level has two more bedrooms, a WC, laundry, storage and a generous hobby room — and connects straight through into the garage.",
+    "The kitchen and bathrooms have been rebuilt: solid oak worktops, a Smeg gas range, and in the bathroom terrazzo floors, a floating vanity with a double basin, and a walk-in shower under a skylight. The wiring and water pipes have been renewed throughout the house, and the paved drive, which takes three cars, has an EV charger on it.",
+    "The south-facing garden behind the house is fenced and sheltered, with a timber deck and newly laid turf. Within walking distance: the preschool and primary school, the Seltjarnarnes pool, Grótta's sports grounds, a nine-hole golf course, and the shops at Eiðistorg — along with the shoreline path out to Grótta, with the whole of Faxaflói in front of you.",
   ],
 };
 
 /**
- * These are set large in the serif, directly opposite the facts table — so they
- * must not repeat it. Size, year and plot belong in the table; what goes here
- * is what a number cannot carry. Keep each one to a single line.
+ * Set large in the serif, directly opposite the facts table — so they must not
+ * repeat it. Size, year, price and room counts belong in the table; what goes
+ * here is what a number cannot carry. One line each.
  */
 const highlights: LList = {
   is: [
-    "Vestast á Seltjarnarnesi",
-    "Stutt í Gróttu og Bakkatjörn",
-    "TODO — helsti kostur",
-    "TODO — annar kostur",
-    "TODO — þriðji kostur",
+    "Mikið endurnýjað",
+    "Arinn í neðri stofu",
+    "Aukin lofthæð og þakgluggar",
+    "Afgirtur suðurgarður",
+    "Hleðslustöð og stæði fyrir þrjá bíla",
+    "Botnlangi, fjaran í göngufæri",
   ],
   en: [
-    "Western edge of Seltjarnarnes",
-    "Minutes from Grótta and Bakkatjörn",
-    "TODO — best feature",
-    "TODO — second feature",
-    "TODO — third feature",
+    "Extensively renovated",
+    "Fireplace in the lower living room",
+    "Raised ceilings and skylights",
+    "Fenced, south-facing garden",
+    "EV charger, parking for three",
+    "Quiet cul-de-sac, shore on foot",
   ],
 };
 
-/**
- * ✓ HMS — the rows a buyer actually reads, in the order they want them.
- * Address and postcode are deliberately absent: they are already in the title
- * and the contact block, and repeating them costs the table its authority.
- */
+/** ✓ BS and ✓ HMS — the rows a buyer reads, in the order they want them. */
 const facts: readonly Fact[] = [
   { label: { is: "Staða", en: "Status" }, value: { is: "Til sölu", en: "For sale" } },
-  { label: { is: "Tegund", en: "Property type" }, value: registry.type },
+  { label: { is: "Ásett verð", en: "Asking price" }, value: listing.askingPrice },
+  { label: { is: "Tegund", en: "Property type" }, value: listing.type },
   {
     label: { is: "Stærð", en: "Size" },
     value: { is: registry.size, en: registry.size },
   },
   {
+    label: { is: "Herbergi", en: "Rooms" },
+    value: { is: listing.rooms, en: listing.rooms },
+  },
+  {
+    label: { is: "Svefnherbergi", en: "Bedrooms" },
+    value: { is: listing.bedrooms, en: listing.bedrooms },
+  },
+  {
+    label: { is: "Baðherbergi", en: "Bathrooms" },
+    value: { is: listing.bathrooms, en: listing.bathrooms },
+  },
+  {
+    label: { is: "Stofur", en: "Living rooms" },
+    value: { is: listing.livingRooms, en: listing.livingRooms },
+  },
+  { label: { is: "Bílskúr", en: "Garage" }, value: listing.garage },
+  {
     label: { is: "Byggingarár", en: "Year built" },
     value: { is: registry.builtYear, en: registry.builtYear },
-  },
-  {
-    label: { is: "Lóð", en: "Plot" },
-    value: {
-      is: `${registry.plotSize}, sameiginleg`,
-      en: `${registry.plotSize}, shared`,
-    },
-  },
-  {
-    label: { is: "Sveitarfélag", en: "Municipality" },
-    value: { is: registry.municipality, en: registry.municipality },
   },
   {
     label: { is: "Fasteignamat 2026", en: "Assessed value 2026" },
@@ -137,11 +150,17 @@ const facts: readonly Fact[] = [
 ];
 
 /**
- * ✓ HMS — the identifiers. Real, and a buyer in Iceland will want them, but
- * they are reference material rather than reading, so they sit in a quieter
- * group below a rule.
+ * ✓ HMS — the identifiers, plus the register's own classification, which reads
+ * differently from how the house is marketed. Reference material rather than
+ * reading, so it sits in a quieter group below a rule.
  */
 const registration: readonly Fact[] = [
+  { label: { is: "Skráð tegund", en: "Registered as" }, value: registry.registeredType },
+  { label: { is: "Inngangur", en: "Entrance" }, value: listing.entrance },
+  {
+    label: { is: "Heildarstærð lóðar", en: "Total plot size" },
+    value: { is: registry.plotSize, en: registry.plotSize },
+  },
   {
     label: { is: "Fasteignanúmer", en: "Property number" },
     value: { is: registry.propertyNumber, en: registry.propertyNumber },
@@ -172,14 +191,14 @@ const registration: readonly Fact[] = [
  * cook, eat, go up, sleep, then step outside and lift off. The `width` values
  * alternate to give the scroll its rhythm — see the note in the README.
  *
- * All sixteen are 2000×1334; next/image resizes and re-encodes per device.
+ * All are 2000×1334; next/image resizes and re-encodes per device.
  */
 const gallery: GalleryImage[] = [
   {
     src: "/images/01-entrance.jpg",
     alt: {
-      is: "Forstofa með rauðum útihurðum og stiga upp á hæðina",
-      en: "Entrance hall with the red front doors and the stair up",
+      is: "Forstofa með rauðum útihurðum og stiga upp á efri pall",
+      en: "Entrance hall with the red front doors and the stair to the upper level",
     },
     width: "full",
   },
@@ -194,8 +213,8 @@ const gallery: GalleryImage[] = [
   {
     src: "/images/03-living-fireplace.jpg",
     alt: {
-      is: "Stofan frá arninum",
-      en: "The living room seen from the fireplace",
+      is: "Setustofan með arninum, þremur tröppum neðar en borðstofan",
+      en: "The sitting room with the fireplace, three steps below the dining room",
     },
     width: "full",
   },
@@ -210,8 +229,8 @@ const gallery: GalleryImage[] = [
   {
     src: "/images/05-kitchen-range.jpg",
     alt: {
-      is: "Eldavélin og viðarborðplatan við gluggann",
-      en: "The range and the wooden worktop by the window",
+      is: "Smeg gaseldavélin og eikarborðplatan við gluggann",
+      en: "The Smeg gas range and the oak worktop by the window",
     },
     width: "half",
   },
@@ -226,24 +245,24 @@ const gallery: GalleryImage[] = [
   {
     src: "/images/07-landing.jpg",
     alt: {
-      is: "Efri hæðin opnast yfir borðstofuna",
-      en: "The upper floor opening over the dining room",
+      is: "Holið á efri palli, með vinnuaðstöðu undir þakglugganum",
+      en: "The upper hall, with the workspace under the skylight",
     },
     width: "inset",
   },
   {
     src: "/images/08-bedroom-principal.jpg",
     alt: {
-      is: "Hjónaherbergið undir súðinni",
-      en: "The principal bedroom under the eaves",
+      is: "Hjónaherbergið á efri palli",
+      en: "The principal bedroom on the upper level",
     },
     width: "full",
   },
   {
     src: "/images/09-bathroom.jpg",
     alt: {
-      is: "Baðherbergið með terrazzo-flísum og fíkustré",
-      en: "The bathroom, terrazzo floor and a fig tree",
+      is: "Baðherbergið: terrazzo-flísar, tvöfaldur vaskur og þakgluggi",
+      en: "The bathroom: terrazzo floor, double basin and a skylight",
     },
     width: "half",
   },
@@ -258,25 +277,22 @@ const gallery: GalleryImage[] = [
   {
     src: "/images/11-balcony.jpg",
     alt: {
-      is: "Svalirnar og útsýnið yfir hverfið",
-      en: "The balcony and the view over the neighbourhood",
+      is: "Svalirnar út af hjónaherberginu",
+      en: "The balcony off the principal bedroom",
     },
     width: "full",
   },
   {
     src: "/images/12-garden.jpg",
     alt: {
-      is: "Verönd og garður með hengirúmi",
-      en: "The deck and garden, with a hammock",
+      is: "Afgirtur suðurgarður með viðarverönd",
+      en: "The fenced south-facing garden and its timber deck",
     },
     width: "full",
   },
   {
     src: "/images/13-street.jpg",
-    alt: {
-      is: "Húsið frá götunni",
-      en: "The house from the street",
-    },
+    alt: { is: "Húsið frá botnlanganum", en: "The house from the cul-de-sac" },
     width: "half",
   },
   {
@@ -290,14 +306,15 @@ const gallery: GalleryImage[] = [
 ];
 
 /**
- * TODO — no drawings were supplied with the photographs. Add them here and the
- * section reappears on its own; while this is empty it renders nothing, and the
- * shortcut to it is hidden.
+ * TODO — the söluyfirlit on the agency listing has the drawings. Add them here
+ * and the section reappears on its own; while this is empty it renders nothing,
+ * and the shortcut to it stays hidden.
  */
 const floorPlans: readonly FloorPlan[] = [];
 
 export const property = {
   registry,
+  listing,
   keyFacts,
   lead,
   description,
@@ -312,14 +329,13 @@ export const property = {
 
   meta: {
     title: {
-      is: "Nesbali 102, Seltjarnarnes — 279 m² | Til sölu",
-      en: "Nesbali 102, Seltjarnarnes — 279 m² | For sale",
+      is: "Nesbali 102, Seltjarnarnes — 279 m², 5 svefnherbergi | Til sölu",
+      en: "Nesbali 102, Seltjarnarnes — 279 m², 5 bedrooms | For sale",
     } as L,
     description: {
-      is: "279 m² eign við Nesbala, vestast á Seltjarnarnesi. Seld beint af eiganda.",
-      en: "A 279 m² home on Nesbali, at the western edge of Seltjarnarnes. Sold privately by the owner.",
+      is: "Mikið endurnýjað 279 m² raðhús á pöllum með innbyggðum bílskúr, vestast á Seltjarnarnesi. Fimm svefnherbergi, tvær stofur, afgirtur suðurgarður.",
+      en: "An extensively renovated 279 m² split-level terraced house with a built-in garage at the western end of Seltjarnarnes. Five bedrooms, two living rooms, a fenced south-facing garden.",
     } as L,
-    /** TODO — set this to the real domain once deployed, so link previews resolve. */
     siteUrl: "https://nesbali102.vercel.app",
   },
 
@@ -331,13 +347,21 @@ export const property = {
     } as L,
   },
 
-  /** TODO — your real details. */
+  /** ✓ BS — the listing agent. Enquiries go to him, not to the owner. */
   contact: {
-    role: { is: "Selt beint af eiganda", en: "Sold privately by the owner" } as L,
-    name: "Ingvi Guðmundsson",
-    phone: "TODO +354 000 0000",
-    phoneHref: "tel:+3540000000",
-    email: "nesbali102@example.com",
+    role: {
+      is: "Löggiltur fasteignasali · Betri Stofan",
+      en: "Licensed estate agent · Betri Stofan",
+    } as L,
+    name: "Hreiðar Levý Guðmundsson",
+    phone: "661 6021",
+    phoneHref: "tel:+3546616021",
+    email: "hreidar@betristofan.is",
+    photo: "/images/agent.jpg",
+    photoAlt: {
+      is: "Hreiðar Levý Guðmundsson, löggiltur fasteignasali",
+      en: "Hreiðar Levý Guðmundsson, licensed estate agent",
+    } as L,
     address: {
       is: "Nesbali 102, 170 Seltjarnarnes",
       en: "Nesbali 102, 170 Seltjarnarnes, Iceland",
@@ -345,8 +369,8 @@ export const property = {
   },
 
   viewing: {
-    is: "Skoðanir eftir samkomulagi, oftast auðveldast á virkum kvöldum og sunnudagseftirmiðdögum. Sendu línu hér að neðan og ég svara samdægurs.",
-    en: "Viewings by appointment, most easily on weekday evenings and Sunday afternoons. Send a note below and I will come back to you the same day.",
+    is: "Skoðun er bókuð hjá Hreiðari Levý, löggiltum fasteignasala, í síma 661 6021 eða á hreidar@betristofan.is. Fyrirspurnin hér að neðan opnast í póstforritinu þínu.",
+    en: "Viewings are booked with Hreiðar Levý, licensed estate agent, on +354 661 6021 or at hreidar@betristofan.is. The form below opens in your own mail app.",
   } as L,
 
   map: {
@@ -362,22 +386,35 @@ export const property = {
      */
     embedSrc:
       "https://www.openstreetmap.org/export/embed.html?bbox=-22.0330%2C64.1520%2C-22.0090%2C64.1630&layer=mapnik&marker=64.1571%2C-22.0212",
-    /** The public register entry — buyers in Iceland will look for it. */
     registryHref: "https://hms.is/fasteignaskra/117492/1024775/2068040",
     registryLabel: { is: "Fasteignaskrá HMS", en: "HMS property register" } as L,
   },
 
+  /**
+   * The formal listing. This page is the owners' own presentation of the house;
+   * the agency's page is the record of sale. Linking it keeps the difference
+   * plain, so nobody mistakes this for Betri Stofan's own listing.
+   */
+  official: {
+    href: "https://betristofan.is/soluskra/eign/914330",
+    label: { is: "Söluskrá Betri Stofan", en: "Listing at Betri Stofan" } as L,
+    note: {
+      is: "Þessi síða er sett upp af eigendum til að sýna eignina. Eignin er í sölu hjá Betri Stofan fasteignasölu, þar sem söluyfirlit og formleg söluskrá eru.",
+      en: "This page was put together by the owners to show the house. The sale itself is handled by Betri Stofan fasteignasala, where the formal listing and the sales prospectus are.",
+    } as L,
+  },
+
   closing: {
     heading: {
-      is: "Komdu og sjáðu hana sjálf.",
+      is: "Komdu og sjáðu það sjálf.",
       en: "Come and see it in person.",
     } as L,
     body: {
-      is: "Myndir segja bara hálfa söguna um svona eign. Birtan fer öðruvísi um hana að morgni en klukkan sex á kvöldin, og sjórinn er nógu nálægt til að heyrast þegar hvessir. Ef þetta hljómar eins og staðurinn sem þú hefur verið að leita að, hafðu samband og komdu í heimsókn.",
-      en: "Photographs only get you so far with a home like this. The light moves through it differently in the morning than it does at six in the evening, and the sea is close enough that you hear it on a rough day. If this sounds like the place you have been looking for, get in touch and come round.",
+      is: "Myndir segja bara hálfa söguna um svona hús. Birtan fer öðruvísi um það að morgni en klukkan sex á kvöldin, og sjórinn er nógu nálægt til að heyrast þegar hvessir. Ef þetta hljómar eins og staðurinn sem þú hefur verið að leita að, bókaðu skoðun og komdu í heimsókn.",
+      en: "Photographs only get you so far with a house like this. The light moves through it differently in the morning than it does at six in the evening, and the sea is close enough that you hear it on a rough day. If this sounds like the place you have been looking for, book a viewing and come round.",
     } as L,
     cta: {
-      label: { is: "Senda fyrirspurn", en: "Send an enquiry" } as L,
+      label: { is: "Bóka skoðun", en: "Book a viewing" } as L,
       href: "#enquiry",
     },
     image: {
